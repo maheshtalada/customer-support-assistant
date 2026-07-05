@@ -413,6 +413,33 @@ conditional random fields or BiLSTM-CRF networks. The NLU stack in this project
 combines a neural intent classifier and sentiment analyser with rule-based entity
 extraction, a pragmatic and explainable configuration for a bounded domain.</p>
 
+<h2>2.3a Text Representation and Feature Engineering</h2>
+<p>Between raw text and a classifier lies the crucial step of representation: how a
+sequence of characters becomes a vector a model can learn from. The simplest
+representation, the bag-of-words model, records which words are present and how
+often, discarding order entirely; despite this crudeness it is surprisingly
+effective for topic-like classification. TF-IDF refines the bag of words by
+down-weighting words that appear in many documents (and are therefore uninformative,
+such as “the” or “please”) and up-weighting words that are distinctive to a document.
+Formally, term frequency measures how often a term occurs in a document, inverse
+document frequency measures how rare the term is across the corpus, and their product
+gives each term a weight that captures its discriminative value. Extending the
+vocabulary to include bigrams — pairs of adjacent words — allows short but meaningful
+phrases such as “too expensive” or “dispute ticket” to be represented as single
+features, which materially improves classification of the colloquial, phrase-heavy
+utterances typical of support chat.</p>
+<p>Dense representations take a different route. Word embeddings map each word to a
+low-dimensional vector such that words used in similar contexts lie close together,
+capturing semantic relationships that a sparse count vector cannot. Contextual
+embeddings from transformer models go further, producing a different vector for a
+word depending on its surrounding context, which resolves ambiguity. These dense
+representations are the foundation of modern deep NLP, but they carry costs: they
+require large pre-trained models, more computation, and they are harder to inspect.
+For a bounded, domain-specific classification task on short utterances, and for a
+proof of concept that prizes transparency and reproducibility, TF-IDF with bigrams
+offers an excellent balance of accuracy, speed and interpretability, which is why it
+is the representation chosen for this project's intent and sentiment classifiers.</p>
+
 <h2>2.4 Sentiment and Emotion Analysis</h2>
 <p>Sentiment analysis determines the affective polarity of text — typically
 positive, negative or neutral — and is a cornerstone of customer-experience
@@ -683,6 +710,24 @@ request in an unexpected way, cannot track sentiment, and offer no learning
 mechanism. There is a clear need for a system that understands natural language
 robustly, acts on real account data, personalizes offers, escalates gracefully,
 and improves over time.</p>
+
+<h3>3.1a Assumptions and Constraints</h3>
+<p>The analysis proceeds under a set of explicit assumptions and constraints that
+bound the problem and inform the design. It is assumed that the customer interacts
+in written English through a browser; that the account, bill, offer and policy data
+required to answer a query are available through the data-access layer; and that a
+customer can be authenticated by a combination of login credentials and a knowledge
+factor. The principal constraints are that the system must run on commodity hardware
+without a graphics processor, must not depend on any paid or remote service to
+function, must protect account data behind authentication, and must never present
+fabricated financial information. These constraints are not incidental — they
+directly motivate several design decisions, including the choice of lightweight
+neural classifiers over large models, the optional and locally hosted language model,
+the mandatory identity-validation step, and the grounded-generation discipline.
+Stating them here makes the rationale for those decisions, developed in Chapter 4,
+easier to follow, and it frames the evaluation in Chapter 9, which must be read in
+the light of the deliberate proof-of-concept constraints rather than against the
+expectations of a fully productionized service.</p>
 
 <h2>3.2 The Proposed System</h2>
 <p>The proposed system is a text-based conversational AI chatbot that addresses
@@ -1537,6 +1582,41 @@ allows the same code to run in pure-template mode for fast, deterministic
 demonstrations, in local-LLM mode for natural phrasing, or against a hosted
 provider in future, purely by editing configuration.</p>
 
+<h2>7.10 The Policy Engine and Sentiment-Driven Behaviour</h2>
+<p>The policy engine is a small but consequential component that converts the raw
+signals of a turn into a directive that shapes the agent's behaviour. It examines the
+current sentiment and its intensity, the trajectory of sentiment across recent turns,
+and the detected intent, and returns a directive specifying a tone (for example
+clear, empathetic, upbeat, apologetic-investigative or de-escalating), an empathy
+level, and an escalation flag. Concretely, a strongly negative sentiment triggers a
+de-escalating tone and raises the escalation flag; a sentiment that has been
+declining across several turns triggers an empathetic tone and also flags escalation;
+a positive promotion inquiry permits an upbeat tone; and a factual dispute selects an
+investigative posture that commits the agent to re-verifying the evidence. Because
+the escalation flag is one of the conditions the coordinator's hand-off detector
+inspects, the policy engine is the mechanism by which a customer's rising frustration
+— even in the absence of explicit haggling — can cause the conversation to be handed
+to the retention specialist. This gives the system a form of emotional awareness that
+a purely intent-driven design would lack, and it does so with transparent, auditable
+rules rather than an opaque model.</p>
+
+<h2>7.11 Session Logging and Metrics Aggregation</h2>
+<p>Observability is implemented through two cooperating mechanisms. During a
+conversation, every turn appends a structured record to the shared state — the
+utterance, the classified intent and its confidence, the sentiment label and score,
+the active spoke, the agent's reply, the measured latency and any feedback — and the
+running trajectories of intent and sentiment are maintained. When a session ends or
+is explicitly saved, the entire state is serialized to a JSON log file. The metrics
+module then reads across these logs to compute aggregate Key Performance Indicators:
+the resolution rate is the fraction of sessions that reached a resolved or
+escalated-and-closed state; the average latency is the mean of the recorded per-turn
+processing times; and the customer-satisfaction proxy is the ratio of positive to
+total thumbs ratings. The same module also performs the offline model evaluation,
+training the classifiers on a stratified split and reporting accuracy together with a
+per-class precision, recall and F1 breakdown. This separation — cheap structured
+logging during conversations, and richer aggregation on demand — keeps the runtime
+light while still producing the quantitative evidence the fifth objective requires.</p>
+
 <!-- ============================== CHAPTER 8 ============================== -->
 <div class="pb"></div>
 <h1>Chapter 8 — Testing</h1>
@@ -1693,6 +1773,41 @@ the mechanism for long-run improvement that the objectives require.</p>
 </table>
 <div class="fig">Table 9.2 — Mapping of Results to Objectives.</div>
 
+<h2>9.6 Qualitative Analysis of Generated Replies</h2>
+<p>Beyond the quantitative metrics, a qualitative examination of the system's
+replies illuminates the value of the grounded-generation design. In pure-template
+mode the replies are correct and clear but somewhat mechanical, for example
+“Your 2026-04 bill is $62, up $27 from last month. The difference is a $21 Data
+overage — 3 GB beyond plan. Does that charge look right to you?” When the local
+language model is enabled, the same underlying facts are re-expressed in a warmer,
+more conversational register, such as “We've charged your account a data overage of
+$21 for exceeding the allowed 3 GB, which is reflected in this month's total bill of
+$62. Does that look correct to you?” Crucially, in both cases every figure — the
+sixty-two-dollar total, the twenty-seven-dollar increase, the twenty-one-dollar
+overage and the three-gigabyte excess — is identical and is drawn from the data
+layer. Inspection across many turns confirms that the language model consistently
+preserves the facts while improving the phrasing, validating the central claim of
+the design: that fluency and factual reliability need not be traded against one
+another. It was during this qualitative analysis that the perspective-drift and
+amount-rendering issues discussed in Chapter 8 were identified and corrected, which
+underscores the importance of reviewing generated output rather than trusting metrics
+alone.</p>
+<h2>9.7 Reflection on the Learning Loop</h2>
+<p>The reinforcement-learning loop is, by design, slow to reveal its effect within a
+single short conversation, since it accumulates evidence across many interactions.
+Nonetheless, its behaviour can be reasoned about and observed. When an offer is
+repeatedly accepted, its estimated acceptance value rises, and because that value is
+blended into the recommendation score, the offer is increasingly likely to be
+surfaced first for comparable customers; conversely, an offer that is repeatedly
+declined gradually recedes. The persisted policy file means this learning survives
+restarts, so the effect compounds across demonstration sessions and is visible in the
+sidebar's learning table as the show and accept counts and the derived value evolve.
+This provides a concrete, inspectable realization of the fourth objective —
+continuous improvement from feedback loops — and, importantly, it does so without
+retraining any large model, illustrating that meaningful adaptivity can be achieved
+with a lightweight, transparent mechanism appropriate to the constraints of a proof
+of concept.</p>
+
 <!-- ============================== CHAPTER 10 ============================== -->
 <div class="pb"></div>
 <h1>Chapter 10 — Conclusion and Future Scope</h1>
@@ -1720,15 +1835,46 @@ supervisor approval in the retention flow is simulated rather than routed throug
 real approval channel, and there is no transfer to a human agent. The system is
 text-only and monolingual.</p>
 <h2>10.3 Future Scope</h2>
-<ul>
-  <li><b>Corpus expansion:</b> mine real, anonymized chat logs and support tickets to enlarge the labelled corpus and lift NLU accuracy substantially.</li>
-  <li><b>Transformer NLU:</b> replace or augment the MLP classifiers with fine-tuned transformer encoders for stronger generalization.</li>
-  <li><b>Live back-ends:</b> swap the synthetic adapters for connectors to production CRM, billing and ticketing systems.</li>
-  <li><b>Contextual RL:</b> extend the bandit to a contextual policy conditioned on customer features for sharper personalization.</li>
-  <li><b>Approval &amp; validation workflows:</b> add a real supervisor approval channel and a proactive validation agent that confirms promised actions were executed, reducing repeat contacts.</li>
-  <li><b>Multilingual &amp; voice:</b> extend to additional languages and to a voice channel.</li>
-  <li><b>Retrieval-augmented answers:</b> ground open FAQ-style questions in a knowledge base via retrieval-augmented generation.</li>
-</ul>
+<p>The proof of concept establishes a foundation that can be extended along several
+complementary directions, each of which addresses one of the limitations noted
+above while preserving the architecture's core strengths.</p>
+<p><b>Corpus expansion and stronger NLU.</b> The single most impactful enhancement
+would be to enlarge the labelled training corpus by mining real, anonymized chat
+logs, frequently-asked-question archives and historical support tickets. A larger,
+more diverse corpus would raise held-out intent accuracy substantially and would
+expose the models to the full variety of phrasings customers actually use. In
+tandem, the multi-layer-perceptron classifiers could be replaced or augmented with
+fine-tuned transformer encoders, which capture contextual meaning far more richly
+than TF-IDF features and generalize better to unseen phrasings, at the cost of
+greater computational demand. A hybrid in which a transformer handles difficult or
+low-confidence utterances while the lightweight classifier handles the common cases
+would balance accuracy against cost.</p>
+<p><b>Integration with live systems.</b> The synthetic data adapters were designed
+from the outset to be swappable. Replacing them with connectors to production
+Customer Relationship Management, billing and ticketing back-ends would turn the
+proof of concept into a deployable service, and because the dialogue logic reads
+account data only through the data-access layer, this integration would require no
+changes to the brain itself. Real-time data would also unlock richer personalization
+and accurate, up-to-the-minute bill explanations.</p>
+<p><b>Smarter learning and richer workflows.</b> The reinforcement-learning bandit
+could be extended into a contextual policy that conditions its choices on the
+customer's features — tier, tenure, usage and sentiment — so that it learns not
+merely which offers are popular overall but which offers suit which kinds of
+customer. On the operational side, a genuine supervisor-approval channel could
+replace the simulated approval in the retention flow, and a proactive validation
+agent could close the loop between promise and fulfilment by confirming that every
+committed action — a credit, a ticket, an applied offer — was actually executed in
+the back-end, automatically remediating discrepancies and thereby reducing the
+repeat contacts that erode satisfaction and inflate cost.</p>
+<p><b>Channel and language expansion.</b> Finally, the system could be extended
+beyond text and English. A voice channel would pair speech recognition and synthesis
+with the existing brain, and multilingual support would broaden its reach.
+Open-ended, FAQ-style questions that fall outside the structured billing and offer
+flows could be answered by grounding a language model in a curated knowledge base
+through retrieval-augmented generation, extending the grounded-generation discipline
+that already governs the system's replies to a much wider range of queries. Together
+these enhancements chart a credible path from a compelling proof of concept to a
+production-grade conversational support platform.</p>
 
 <!-- ============================== REFERENCES ============================== -->
 <div class="pb"></div>
