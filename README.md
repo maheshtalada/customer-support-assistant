@@ -1,4 +1,4 @@
-# Telco Customer Support Chatbot — Billing Disputes & Offer Recommendations
+# Customer Support Chatbot — Billing Disputes & Offer Recommendations
 
 An intelligent **conversational AI chatbot** that gives telecom customers
 automated, real-time support for **billing disputes** and **personalized offer
