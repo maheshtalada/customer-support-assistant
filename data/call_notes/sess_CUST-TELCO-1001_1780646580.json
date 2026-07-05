@@ -1,0 +1,48 @@
+{
+  "session_id": "sess_CUST-TELCO-1001_1780646580",
+  "customer_id": "CUST-TELCO-1001",
+  "generated_at_epoch": 1780646580.4794502,
+  "active_flow": "UC-01",
+  "resolution_status": "resolved",
+  "escalated": false,
+  "intent_path": [
+    "BILL_EXPLAIN",
+    "FACTUAL_DISPUTE",
+    "CREATE_TICKET"
+  ],
+  "sentiment": {
+    "trajectory": [
+      -0.55,
+      0.0,
+      0.0
+    ],
+    "average": -0.18,
+    "trend": "improving"
+  },
+  "emotion": {
+    "trajectory": [
+      "NEUTRAL",
+      "NEUTRAL",
+      "NEUTRAL"
+    ],
+    "dominant_top2": [
+      "NEUTRAL"
+    ],
+    "trend": "stable"
+  },
+  "actions_taken": [],
+  "barge_in_events": [
+    {
+      "turn_id": "t_0002",
+      "user_interruption_transcript": "Wait, I didn't even go to Mexico!",
+      "classified_as": "FACTUAL_DISPUTE",
+      "agent_utterance_truncated_at": "and",
+      "agent_utterance_percent_delivered": 0.6,
+      "agent_intended_utterance": "I can see there's a 30 dollar roaming charge from your Mexico trip last week, and I'd be happy to walk you through the breakdown of each line.",
+      "interruption_point_ms": 2100,
+      "led_to_resolution_change": true
+    }
+  ],
+  "summary": "Customer opened with BILL_EXPLAIN; session ran 3 turns with a neutral tone on average. Actions: no backend actions. Resolution: resolved.",
+  "customer_summary": "Bill\nResolved\nDiscussed bill.\n\nConversation Summary\nIssue Reported\nCustomer raised concerns regarding bill, support ticket.\n\nRoot Cause Identified\nNot yet diagnosed.\n\nResolution\nNo action taken on this call.\n\nCustomer Sentiment\nCustomer sentiment ended improving."
+}

@@ -1,0 +1,210 @@
+<meta charset="utf-8">
+<title>Final Presentation</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; margin: 0; color: #1f2430; }
+  .slide { width: 297mm; height: 209mm; padding: 18mm 20mm; page-break-after: always;
+           position: relative; overflow: hidden; }
+  .slide h1 { font-size: 30px; color: #312e81; margin: 0 0 6px; }
+  .slide h2 { font-size: 24px; color: #4f46e5; margin: 0 0 14px; }
+  .slide p, .slide li { font-size: 15px; line-height: 1.5; }
+  ul { margin: 6px 0 0 22px; } li { margin: 6px 0; }
+  .title { background: linear-gradient(135deg,#4f46e5,#312e81); color: #fff;
+           display: flex; flex-direction: column; justify-content: center; }
+  .title h1 { color: #fff; font-size: 40px; }
+  .title .sub { font-size: 20px; opacity: .95; margin-top: 10px; }
+  .title .meta { position: absolute; bottom: 18mm; font-size: 15px; opacity: .9; }
+  .foot { position: absolute; bottom: 8mm; right: 20mm; font-size: 11px; color: #999; }
+  .cols { display: flex; gap: 20px; }
+  .col { flex: 1; }
+  .card { background: #f0f1f8; border-radius: 10px; padding: 14px 16px; margin: 8px 0; }
+  .card b { color: #312e81; }
+  img { max-width: 100%; max-height: 128mm; border: 1px solid #d5d8e2; border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 8px; }
+  th, td { border: 1px solid #d5d8e2; padding: 7px 9px; text-align: left; }
+  th { background: #eef; color: #312e81; }
+  .tag { display:inline-block; background:#eef; color:#312e81; border-radius:12px;
+         padding:3px 12px; font-size:13px; margin:3px; }
+  .center { display:flex; align-items:center; justify-content:center; height:150mm; flex-direction:column;}
+</style>
+
+<!-- 1 Title -->
+<div class="slide title">
+  <h1>Intelligent Conversational AI Chatbot</h1>
+  <div class="sub">Automated Customer Support for Billing Disputes &amp; Offer Recommendations</div>
+  <div class="sub">NLP · Deep-Learning NLU · Hub-and-Spoke Agents · Reinforcement Learning</div>
+  <div class="meta">MCA Final Project — Proof of Concept · 2026</div>
+</div>
+
+<!-- 2 Problem -->
+<div class="slide">
+  <h2>The Problem</h2>
+  <ul>
+    <li>Telecom support is dominated by two repetitive intents: <b>“why is my bill wrong?”</b> and <b>“is there a better deal?”</b></li>
+    <li>Human agents are costly, inconsistent, and hold times hurt satisfaction.</li>
+    <li>These flows are rule-heavy and latency-sensitive — ideal for AI automation.</li>
+  </ul>
+  <div class="card"><b>Goal:</b> an AI agent that understands free-text queries, acts on the real account, resolves the issue, and escalates hard cases — without fabricating any charge or offer.</div>
+  <div class="foot">2</div>
+</div>
+
+<!-- 3 Objectives -->
+<div class="slide">
+  <h2>Objectives</h2>
+  <ol>
+    <li>Automated, real-time conversational support using NLP.</li>
+    <li>Improve response quality &amp; efficiency (↑ satisfaction, ↓ response time).</li>
+    <li>Deep-learning NLU + NLG for context-aware, human-like interactions.</li>
+    <li>Reinforcement learning for continuous improvement from feedback.</li>
+    <li>Evaluate: accuracy, intent precision, resolution rate, latency, satisfaction.</li>
+  </ol>
+  <div class="foot">3</div>
+</div>
+
+<!-- 4 What it does -->
+<div class="slide">
+  <h2>What the Chatbot Does</h2>
+  <div class="cols">
+    <div class="col card"><b>🧾 Understand your bill</b><br>Explains changes line-by-line.</div>
+    <div class="col card"><b>⚖️ Dispute a charge</b><br>Shows evidence; resolves via credit, waiver or ticket.</div>
+    <div class="col card"><b>🎁 Get offers</b><br>Personalized, RL-optimized recommendations.</div>
+  </div>
+  <ul>
+    <li><b>Identity validation</b> before any account data is shown.</li>
+    <li><b>Hub-and-spoke</b> handoff from front-line agent to retention specialist.</li>
+    <li><b>Grounded NLG</b> — optional local LLM only rephrases, never invents facts.</li>
+  </ul>
+  <div class="foot">4</div>
+</div>
+
+<!-- 5 Architecture -->
+<div class="slide">
+  <h2>Architecture — “Thick Brain, Thin UI”</h2>
+  <p>Per-turn pipeline: <b>NLU → Policy → Hub routing → Spoke flow → Recommendation (+RL) → NLG</b></p>
+  <table>
+    <tr><th>Layer</th><th>Does</th></tr>
+    <tr><td>Presentation (Streamlit)</td><td>Auth, chat, live signals, KPIs</td></tr>
+    <tr><td>Brain (Coordinator + spokes)</td><td>Understand, route, decide, act</td></tr>
+    <tr><td>Data &amp; config (JSON, .env)</td><td>Accounts, offers, models, provider</td></tr>
+  </table>
+  <p style="margin-top:10px;">Two AI spokes — <b>Aria</b> (billing &amp; offers) and <b>Ray</b> (retention) — never talk directly; only the hub moves control.</p>
+  <div class="foot">5</div>
+</div>
+
+<!-- 6 Hub and spoke screenshot -->
+<div class="slide">
+  <h2>Hub-and-Spoke in Action</h2>
+  <div class="center">
+    <img src="../screenshots/07-handoff-retention.png">
+  </div>
+  <div class="foot">6</div>
+</div>
+
+<!-- 7 NLU -->
+<div class="slide">
+  <h2>NLU — Deep-Learning Understanding (M3)</h2>
+  <ul>
+    <li><b>Intent</b> — 14 classes, TF-IDF → <b>MLP neural network</b>, keyword fallback.</li>
+    <li><b>Sentiment</b> — POS/NEU/NEG MLP → signed score + intensity.</li>
+    <li><b>Entities</b> — regex slot-filling: charge ids, amounts, dispute topic, yes/no.</li>
+    <li>Fused into a single <b>TurnFrame</b> consumed by the coordinator.</li>
+  </ul>
+  <div class="card">Every turn shows live intent, sentiment, and policy signals in the UI sidebar.</div>
+  <div class="foot">7</div>
+</div>
+
+<!-- 8 NLG -->
+<div class="slide">
+  <h2>NLG — Grounded &amp; Pluggable (M4)</h2>
+  <ul>
+    <li>Flows emit a deterministic <b>template + grounded facts</b>.</li>
+    <li>Optional <b>local LLM (Ollama · llama3.2)</b> rephrases in the persona voice.</li>
+    <li>Provider set in <code>.env</code>: <span class="tag">ollama</span><span class="tag">template</span><span class="tag">openai</span><span class="tag">anthropic</span></li>
+    <li>LLM is told <b>not to invent</b> numbers → no hallucinated bills/offers.</li>
+    <li>Any LLM failure → automatic template fallback (demo never breaks).</li>
+  </ul>
+  <div class="foot">8</div>
+</div>
+
+<!-- 9 RL -->
+<div class="slide">
+  <h2>Reinforcement Learning (M5)</h2>
+  <ul>
+    <li>Epsilon-greedy <b>bandit</b>: each offer is an arm with shows/accepts.</li>
+    <li>Reward: <b>accept = 1, decline = 0</b>; value Q = accepts / shows.</li>
+    <li>Ranking blends learned value: <code>score = 0.7·base + 0.3·Q</code>.</li>
+    <li>Feedback from accept/decline and 👍/👎; <b>policy persists</b> across sessions.</li>
+  </ul>
+  <div class="card"><b>Effect:</b> offers customers actually accept float to the top over time — continuous improvement from feedback loops.</div>
+  <div class="foot">9</div>
+</div>
+
+<!-- 10 Offer screenshot -->
+<div class="slide">
+  <h2>Offer Recommendation (UC-02)</h2>
+  <div class="center">
+    <img src="../screenshots/09-offer-recommendation.png">
+  </div>
+  <div class="foot">10</div>
+</div>
+
+<!-- 11 Results -->
+<div class="slide">
+  <h2>Results &amp; Evaluation</h2>
+  <table>
+    <tr><th>Metric</th><th>Value</th><th>Source</th></tr>
+    <tr><td>Sentiment accuracy (held-out)</td><td>~83%</td><td>MLP, stratified split</td></tr>
+    <tr><td>Intent accuracy (held-out)</td><td>~62%*</td><td>MLP, small seed corpus</td></tr>
+    <tr><td>Resolution rate</td><td>100%</td><td>Test scenarios</td></tr>
+    <tr><td>Avg per-turn latency</td><td>~2 ms</td><td>Template mode</td></tr>
+    <tr><td>CSAT proxy</td><td>👍/👎 feedback</td><td>Session logs</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:13px;">*Limited by the small PoC seed corpus; runtime trains on full data + keyword fallback. Reproducible via <code>python evaluate.py</code>.</p>
+  <div class="foot">11</div>
+</div>
+
+<!-- 12 Tech stack -->
+<div class="slide">
+  <h2>Tech Stack</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card"><b>UI</b> — Streamlit chat</div>
+      <div class="card"><b>NLU</b> — scikit-learn MLP + TF-IDF</div>
+      <div class="card"><b>NLG</b> — templates + Ollama LLM</div>
+    </div>
+    <div class="col">
+      <div class="card"><b>RL</b> — epsilon-greedy bandit</div>
+      <div class="card"><b>Data</b> — synthetic JSON</div>
+      <div class="card"><b>Config</b> — .env provider switch</div>
+    </div>
+  </div>
+  <p>Runs entirely on a laptop — one command: <code>./run.sh</code></p>
+  <div class="foot">12</div>
+</div>
+
+<!-- 13 Conclusion -->
+<div class="slide">
+  <h2>Conclusion &amp; Future Scope</h2>
+  <p><b>Delivered:</b> an end-to-end conversational agent that understands queries,
+  resolves billing disputes, recommends &amp; applies offers, escalates via
+  hub-and-spoke, learns from feedback, and is fully observable — meeting all five
+  objectives.</p>
+  <p><b>Future scope:</b></p>
+  <ul>
+    <li>Mine NLU training data from real chat logs; add a transformer NLU.</li>
+    <li>Wire live CRM / billing systems in place of synthetic adapters.</li>
+    <li>Contextual RL policy over customer features; supervisor approval workflow.</li>
+    <li>Proactive validation of promised actions to cut repeat contacts.</li>
+  </ul>
+  <div class="foot">13</div>
+</div>
+
+<!-- 14 Thank you -->
+<div class="slide title">
+  <div style="text-align:center;width:100%;">
+    <h1>Thank You</h1>
+    <div class="sub">Demo: <code>./run.sh</code> → http://localhost:8501</div>
+    <div class="sub">Repository &amp; docs: README.md · architecture/ · docs/demo/demo.mp4</div>
+  </div>
+</div>

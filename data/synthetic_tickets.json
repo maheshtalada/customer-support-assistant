@@ -1,0 +1,129 @@
+{
+  "tickets": [
+    {
+      "ticket_id": "TKT-952F3200",
+      "customer_id": "CUST-TELCO-1001",
+      "subject": "Billing dispute for charge CHG-ROAM-MEX-1001",
+      "reason": "Yeah, there's a formal dispute against this.",
+      "status": "OPEN",
+      "category": "BILLING_DISPUTE",
+      "charge_id": "CHG-ROAM-MEX-1001",
+      "session_id": null,
+      "sla_hours": 48,
+      "created_ts": 1777457251.044254,
+      "updated_ts": 1777457251.044254,
+      "history": [
+        {
+          "ts": 1777457251.044254,
+          "event": "created",
+          "status": "OPEN",
+          "by": "telco-cc-agent",
+          "session_id": null
+        }
+      ],
+      "extra": {
+        "idempotency_key": "sess_CUST-TELCO-1001_1777457171:tkt:CHG-ROAM-MEX-1001"
+      }
+    },
+    {
+      "ticket_id": "TKT-BF54CA9F",
+      "customer_id": "CUST-TELCO-1001",
+      "subject": "Billing dispute for charge CHG-ROAM-MEX-1001",
+      "reason": "please open a formal dispute ticket",
+      "status": "OPEN",
+      "category": "BILLING_DISPUTE",
+      "charge_id": "CHG-ROAM-MEX-1001",
+      "session_id": "sess_CUST-TELCO-1001_1783265808",
+      "sla_hours": 48,
+      "created_ts": 1783265808.6124082,
+      "updated_ts": 1783265808.6124082,
+      "history": [
+        {
+          "event": "created",
+          "status": "OPEN",
+          "by": "billing-agent"
+        }
+      ]
+    },
+    {
+      "ticket_id": "TKT-8F8D30E5",
+      "customer_id": "CUST-TELCO-1001",
+      "subject": "Billing dispute for charge CHG-ROAM-MEX-1001",
+      "reason": "please open a formal dispute ticket",
+      "status": "OPEN",
+      "category": "BILLING_DISPUTE",
+      "charge_id": "CHG-ROAM-MEX-1001",
+      "session_id": "sess_CUST-TELCO-1001_1783265953",
+      "sla_hours": 48,
+      "created_ts": 1783265953.240521,
+      "updated_ts": 1783265953.240521,
+      "history": [
+        {
+          "event": "created",
+          "status": "OPEN",
+          "by": "billing-agent"
+        }
+      ]
+    },
+    {
+      "ticket_id": "TKT-1BD730D4",
+      "customer_id": "CUST-TELCO-1001",
+      "subject": "Billing dispute for charge CHG-ROAM-MEX-1001",
+      "reason": "please open a formal dispute ticket",
+      "status": "OPEN",
+      "category": "BILLING_DISPUTE",
+      "charge_id": "CHG-ROAM-MEX-1001",
+      "session_id": "sess_CUST-TELCO-1001_1783269160",
+      "sla_hours": 48,
+      "created_ts": 1783269162.964818,
+      "updated_ts": 1783269162.964818,
+      "history": [
+        {
+          "event": "created",
+          "status": "OPEN",
+          "by": "billing-agent"
+        }
+      ]
+    },
+    {
+      "ticket_id": "TKT-130FC26F",
+      "customer_id": "CUST-TELCO-1001",
+      "subject": "Billing dispute for charge CHG-ROAM-MEX-1001",
+      "reason": "please open a formal dispute ticket",
+      "status": "OPEN",
+      "category": "BILLING_DISPUTE",
+      "charge_id": "CHG-ROAM-MEX-1001",
+      "session_id": "sess_CUST-TELCO-1001_1783269216",
+      "sla_hours": 48,
+      "created_ts": 1783269220.336564,
+      "updated_ts": 1783269220.336564,
+      "history": [
+        {
+          "event": "created",
+          "status": "OPEN",
+          "by": "billing-agent"
+        }
+      ]
+    },
+    {
+      "ticket_id": "TKT-E731FA9A",
+      "customer_id": "CUST-TELCO-1001",
+      "subject": "Billing dispute for charge CHG-ROAM-MEX-1001",
+      "reason": "please open a formal dispute ticket",
+      "status": "OPEN",
+      "category": "BILLING_DISPUTE",
+      "charge_id": "CHG-ROAM-MEX-1001",
+      "session_id": "sess_CUST-TELCO-1001_1783269995",
+      "sla_hours": 48,
+      "created_ts": 1783269995.708503,
+      "updated_ts": 1783269995.708503,
+      "history": [
+        {
+          "event": "created",
+          "status": "OPEN",
+          "by": "billing-agent"
+        }
+      ]
+    }
+  ]
+}

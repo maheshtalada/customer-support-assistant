@@ -1,0 +1,10 @@
+# Streamlit app config — force a clean light theme for the demo.
+[theme]
+base = "light"
+primaryColor = "#4f46e5"          # indigo accent (buttons, highlights)
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f5f6fa"
+textColor = "#1f2430"
+
+[browser]
+gatherUsageStats = false

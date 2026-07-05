@@ -1,0 +1,43 @@
+=== NLU model evaluation (held-out split) ===
+
+[Intent MLP]  accuracy=61.76%
+                 precision    recall  f1-score   support
+
+   BILL_DISPUTE       0.75      1.00      0.86         3
+   BILL_EXPLAIN       0.75      1.00      0.86         3
+     CONFIRM_NO       0.00      0.00      0.00         2
+    CONFIRM_YES       0.67      0.67      0.67         3
+  CREATE_TICKET       1.00      1.00      1.00         2
+FACTUAL_DISPUTE       1.00      1.00      1.00         3
+       FALLBACK       1.00      0.50      0.67         2
+        GOODBYE       0.00      0.00      0.00         2
+       GREETING       0.33      0.50      0.40         2
+         HAGGLE       1.00      0.33      0.50         3
+  HUMAN_HANDOFF       0.00      0.00      0.00         2
+  PAYMENT_QUERY       1.00      0.50      0.67         2
+  PROMO_INQUIRY       0.29      0.67      0.40         3
+  TICKET_STATUS       1.00      1.00      1.00         2
+
+       accuracy                           0.62        34
+      macro avg       0.63      0.58      0.57        34
+   weighted avg       0.65      0.62      0.60        34
+
+
+[Sentiment MLP]  accuracy=83.33%
+              precision    recall  f1-score   support
+
+         NEG       0.75      0.75      0.75         4
+         NEU       0.80      1.00      0.89         4
+         POS       1.00      0.75      0.86         4
+
+    accuracy                           0.83        12
+   macro avg       0.85      0.83      0.83        12
+weighted avg       0.85      0.83      0.83        12
+
+
+=== Live conversation KPIs (from data/sessions/*.json) ===
+  sessions          : 12
+  resolution_rate   : 1.0
+  avg_latency_ms    : 638
+  csat_proxy        : None
+  feedback_count    : 0

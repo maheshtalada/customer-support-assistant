@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "username": "rahulmehtha@brillio.com",
+      "password": "teleco123",
+      "display_name": "Rahul Mehtha",
+      "role": "human"
+    },
+    {
+      "username": "rajeshkumar@brillio.com",
+      "password": "teleco123",
+      "display_name": "Rajesh Kumar",
+      "role": "human"
+    },
+    {
+      "username": "divyapatel@brillio.com",
+      "password": "teleco123",
+      "display_name": "Divya Patel",
+      "role": "human"
+    },
+    {
+      "username": "amitverma@brillio.com",
+      "password": "teleco123",
+      "display_name": "Amit Verma",
+      "role": "human"
+    },
+    {
+      "username": "rahulsharma@brillio.com",
+      "password": "teleco123",
+      "display_name": "Rahul Sharma",
+      "role": "human"
+    },
+    {
+      "username": "sanjaydesai@brillio.com",
+      "password": "teleco123",
+      "display_name": "Sanjay Desai",
+      "role": "human"
+    }
+  ]
+}

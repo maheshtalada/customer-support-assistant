@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+app/nlu/models/*.joblib
+data/sessions/*.json
+data/rl_policy.json
+docs/demo/*.webm
+CLAUDE.md
+./CLAUDE.md

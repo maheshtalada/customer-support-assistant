@@ -1,0 +1,212 @@
+{
+  "customers": {
+    "CUST-TELCO-1001": {
+      "customer_id": "CUST-TELCO-1001",
+      "first_name": "Ethan",
+      "last_name": "Walker",
+      "phone": "+15125550101",
+      "email": "ethan.walker@example.com",
+      "plan": "UNLIMITED_PREMIUM_85",
+      "tenure_months": 47,
+      "arpu_usd": 85,
+      "loyalty_tier": "GOLD",
+      "segment": "HIGH_VALUE",
+      "language_pref": "EN_US",
+      "last4_id": "4821",
+      "offers_redeemed": []
+    },
+    "CUST-TELCO-1002": {
+      "customer_id": "CUST-TELCO-1002",
+      "first_name": "Sarah",
+      "last_name": "Chen",
+      "phone": "+14155550102",
+      "email": "sarah.chen@example.com",
+      "plan": "FAMILY_SHARE_120",
+      "tenure_months": 12,
+      "arpu_usd": 120,
+      "loyalty_tier": "SILVER",
+      "segment": "STANDARD",
+      "language_pref": "EN_US",
+      "last4_id": "6610",
+      "family_lines": [
+        {"line_id": "LN-1002-01", "label": "Sarah (primary)",  "msisdn": "+14155550102", "data_gb_last_cycle": 6.2, "voice_min_last_cycle": 220},
+        {"line_id": "LN-1002-02", "label": "David (spouse)",   "msisdn": "+14155550112", "data_gb_last_cycle": 3.1, "voice_min_last_cycle": 140},
+        {"line_id": "LN-1002-03", "label": "Lily (teen)",      "msisdn": "+14155550122", "data_gb_last_cycle": 1.4, "voice_min_last_cycle":  30},
+        {"line_id": "LN-1002-04", "label": "Noah (teen)",      "msisdn": "+14155550132", "data_gb_last_cycle": 0.9, "voice_min_last_cycle":  18}
+      ],
+      "plan_pool_gb": 40,
+      "pool_used_gb_last_cycle": 11.6
+    },
+    "CUST-TELCO-1003": {
+      "customer_id": "CUST-TELCO-1003",
+      "first_name": "Marcus",
+      "last_name": "Rivera",
+      "phone": "+17185550103",
+      "email": "marcus.rivera@example.com",
+      "plan": "ESSENTIAL_5G_35",
+      "tenure_months": 6,
+      "arpu_usd": 35,
+      "loyalty_tier": "BRONZE",
+      "segment": "VALUE",
+      "language_pref": "EN_US",
+      "last4_id": "1100"
+    }
+  },
+  "bills": {
+    "CUST-TELCO-1001": {
+      "bill_id": "BILL-2026-04-1001",
+      "cycle": "2026-04",
+      "total_usd": 122,
+      "previous_usd": 92,
+      "due_date": "2026-04-28",
+      "status": "UNPAID",
+      "line_items": [
+        {"charge_id": "CHG-BASE-001", "description": "Unlimited Premium plan", "amount_usd": 85, "type": "PLAN"},
+        {"charge_id": "CHG-TAX-001", "description": "State & Federal taxes and fees", "amount_usd": 7, "type": "TAX"},
+        {"charge_id": "CHG-ROAM-MEX-1001", "description": "International roaming — Mexico (Cancun)", "amount_usd": 30, "type": "ROAMING", "evidence": {"tower_ids": ["MEX-CELL-44A","MEX-CELL-77B"], "dates": "2026-04-08 to 2026-04-11", "confidence": "HIGH", "trip_id": "TRIP-APR-2026-MX", "session_type": "FRESH_ROAMING_SESSION", "linked_pack_id": null}}
+      ]
+    },
+    "CUST-TELCO-1002": {
+      "bill_id": "BILL-2026-04-1002",
+      "cycle": "2026-04",
+      "total_usd": 120,
+      "previous_usd": 120,
+      "due_date": "2026-04-28",
+      "status": "UNPAID",
+      "line_items": [
+        {"charge_id": "CHG-BASE-002", "description": "Family Share plan", "amount_usd": 102, "type": "PLAN"},
+        {"charge_id": "CHG-TAX-002", "description": "State & Federal taxes and fees", "amount_usd": 18, "type": "TAX"}
+      ]
+    },
+    "CUST-TELCO-1003": {
+      "bill_id": "BILL-2026-04-1003",
+      "cycle": "2026-04",
+      "total_usd": 62,
+      "previous_usd": 35,
+      "due_date": "2026-04-28",
+      "status": "UNPAID",
+      "line_items": [
+        {"charge_id": "CHG-BASE-003", "description": "Essential 5G plan", "amount_usd": 35, "type": "PLAN"},
+        {"charge_id": "CHG-TAX-003", "description": "State & Federal taxes and fees", "amount_usd": 6, "type": "TAX"},
+        {"charge_id": "CHG-OVG-003", "description": "Data overage — 3 GB beyond plan", "amount_usd": 21, "type": "OVERAGE", "evidence": {"usage_gb": 3.1, "window": "2026-03-25 to 2026-04-05"}}
+      ]
+    }
+  },
+  "payments": {
+    "CUST-TELCO-1001": [
+      {"txn_id": "PAY-1001-MAR", "date": "2026-03-22", "amount_usd": 92, "method": "CARD", "status": "SUCCESS"},
+      {"txn_id": "PAY-1001-FEB", "date": "2026-02-21", "amount_usd": 92, "method": "CARD", "status": "SUCCESS"},
+      {"txn_id": "PAY-1001-JAN", "date": "2026-01-22", "amount_usd": 92, "method": "CARD", "status": "SUCCESS"}
+    ],
+    "CUST-TELCO-1002": [
+      {"txn_id": "PAY-1002-MAR", "date": "2026-03-24", "amount_usd": 120, "method": "CARD", "status": "SUCCESS"},
+      {"txn_id": "PAY-1002-FEB", "date": "2026-02-23", "amount_usd": 120, "method": "CARD", "status": "SUCCESS"},
+      {"txn_id": "PAY-1002-JAN", "date": "2026-01-24", "amount_usd": 120, "method": "CARD", "status": "SUCCESS"}
+    ],
+    "CUST-TELCO-1003": [
+      {"txn_id": "PAY-1003-MAR", "date": "2026-03-29", "amount_usd": 35, "method": "ACH", "status": "SUCCESS"},
+      {"txn_id": "PAY-1003-FEB", "date": "2026-02-28", "amount_usd": 35, "method": "ACH", "status": "SUCCESS"},
+      {"txn_id": "PAY-1003-JAN", "date": "2026-01-30", "amount_usd": 35, "method": "ACH", "status": "SUCCESS"}
+    ]
+  },
+  "promotions": {
+    "OFFERS": [
+      {
+        "offer_id": "OFFER-LOYALTY-GOLD-10",
+        "title": "Gold loyalty — 10% off for 3 months",
+        "target_tier": "GOLD",
+        "min_tenure_months": 36,
+        "discount_pct": 10,
+        "duration_months": 3,
+        "value_usd": 24,
+        "applies_to": "PLAN_CHARGE",
+        "stackable_with": ["OFFER-DATA-5GB-FREE"]
+      },
+      {
+        "offer_id": "OFFER-DATA-5GB-FREE",
+        "title": "Add-on 5 GB data free for 2 months",
+        "target_tier": "ANY",
+        "min_tenure_months": 3,
+        "discount_pct": 0,
+        "duration_months": 2,
+        "value_usd": 12,
+        "applies_to": "DATA_ADDON",
+        "stackable_with": ["OFFER-LOYALTY-GOLD-10"]
+      },
+      {
+        "offer_id": "OFFER-FAMILY-UPGRADE",
+        "title": "Upgrade to Family Share plan — first month free",
+        "target_tier": "SILVER",
+        "min_tenure_months": 6,
+        "discount_pct": 100,
+        "duration_months": 1,
+        "value_usd": 120
+      },
+      {
+        "offer_id": "OFFER-RETENTION-BRONZE-WAIVER",
+        "title": "One-time 50% waiver on current bill overage",
+        "target_tier": "BRONZE",
+        "min_tenure_months": 1,
+        "discount_pct": 50,
+        "duration_months": 0,
+        "value_usd": 10
+      }
+    ]
+  },
+  "plans": {
+    "UNLIMITED_PREMIUM_85": {"plan_id": "UNLIMITED_PREMIUM_85", "monthly_usd": 85, "data_cap_gb": null, "lines_included": 1, "tier_fit": ["GOLD","SILVER"]},
+    "FAMILY_SHARE_120":     {"plan_id": "FAMILY_SHARE_120",     "monthly_usd": 102, "pool_gb": 40, "lines_included": 4, "tier_fit": ["SILVER","GOLD"]},
+    "FAMILY_SHARE_LITE_70": {"plan_id": "FAMILY_SHARE_LITE_70", "monthly_usd": 70,  "pool_gb": 20, "lines_included": 4, "tier_fit": ["SILVER"], "downgrade_target_for": ["FAMILY_SHARE_120"]},
+    "ESSENTIAL_5G_35":      {"plan_id": "ESSENTIAL_5G_35",      "monthly_usd": 35,  "data_cap_gb": 8, "lines_included": 1, "tier_fit": ["BRONZE"]}
+  },
+  "dispute_policies": {
+    "provisional_credit": {
+      "description": "Temporary credit issued at dispute open; reverses if investigation confirms charge validity.",
+      "eligibility_by_tier": {
+        "GOLD":   {"eligible": true,  "max_usd": 100, "auto_approve": true},
+        "SILVER": {"eligible": true,  "max_usd": 50,  "auto_approve": true},
+        "BRONZE": {"eligible": false, "max_usd": 0,   "auto_approve": false, "requires_supervisor": true}
+      },
+      "sla_hours": 48,
+      "reversal_notice_hours": 48,
+      "confirmation_channels": ["EMAIL", "SMS"]
+    },
+    "retention_waivers": {
+      "bronze_overage_50pct": {
+        "offer_id": "OFFER-RETENTION-BRONZE-WAIVER",
+        "applies_to_charge_types": ["OVERAGE"],
+        "max_per_year": 1
+      }
+    }
+  },
+  "usage_history": {
+    "CUST-TELCO-1001": [
+      {"cycle": "2026-03", "data_gb_used": 9.4, "data_cap_gb": 8, "throttled_after_gb": 8, "throttle_days": 6, "complaint_session": "SESS-0009"},
+      {"cycle": "2026-02", "data_gb_used": 7.6, "data_cap_gb": 8, "throttle_days": 0},
+      {"cycle": "2026-01", "data_gb_used": 6.9, "data_cap_gb": 8, "throttle_days": 0}
+    ],
+    "CUST-TELCO-1003": [
+      {"cycle": "2026-03", "data_gb_used": 9.4, "data_cap_gb": 8, "throttled_after_gb": 8, "throttle_days": 6, "complaint_session": "SESS-0009"},
+      {"cycle": "2026-02", "data_gb_used": 7.6, "data_cap_gb": 8, "throttle_days": 0},
+      {"cycle": "2026-01", "data_gb_used": 6.9, "data_cap_gb": 8, "throttle_days": 0}
+    ],
+    "CUST-TELCO-1002": [
+      {"cycle": "2026-03", "pool_used_gb": 10.8, "pool_gb": 40, "pool_utilization_pct": 27},
+      {"cycle": "2026-02", "pool_used_gb": 12.1, "pool_gb": 40, "pool_utilization_pct": 30},
+      {"cycle": "2026-01", "pool_used_gb":  9.7, "pool_gb": 40, "pool_utilization_pct": 24}
+    ]
+  },
+  "interaction_history": {
+    "CUST-TELCO-1001": [
+      {"session_id": "SESS-0003", "date": "2026-02-10", "summary": "Resolved text message pack renewal query.", "dominant_emotion": "NEUTRAL", "outcome": "RESOLVED"},
+      {"session_id": "SESS-0011", "date": "2025-11-15", "summary": "Upgraded to international roaming for Mexico trip.", "dominant_emotion": "SATISFACTION", "outcome": "RESOLVED", "pack_id": "PACK-ROAM-MX-NOV2025", "trip_id": "TRIP-NOV-2025-MX", "pack_expiry_date": "2025-11-30", "pack_status": "EXPIRED"}
+    ],
+    "CUST-TELCO-1002": [
+      {"session_id": "SESS-0005", "date": "2026-01-04", "summary": "Enquired about family plan add-on lines.", "dominant_emotion": "NEUTRAL", "outcome": "INFO_PROVIDED"},
+      {"session_id": "SESS-0014", "date": "2026-03-30", "summary": "Asked whether a lower-cost family plan exists; no action taken.", "dominant_emotion": "DISAPPOINTMENT", "outcome": "INFO_PROVIDED"}
+    ],
+    "CUST-TELCO-1003": [
+      {"session_id": "SESS-0009", "date": "2026-03-18", "summary": "Complained about data speed after monthly cap.", "dominant_emotion": "FRUSTRATION", "outcome": "ESCALATED"}
+    ]
+  }
+}

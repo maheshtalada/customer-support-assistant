@@ -1,0 +1,14 @@
+# Core
+streamlit>=1.36
+scikit-learn>=1.4
+numpy>=1.26
+pandas>=2.2
+joblib>=1.4
+python-dotenv>=1.0
+pyyaml>=6.0
+requests>=2.31
+
+# Optional LLM providers (only needed if you switch LLM_PROVIDER in .env)
+# ollama runs as a separate local service (https://ollama.com) — no python pkg required (we call its HTTP API)
+# openai>=1.30          # uncomment to enable LLM_PROVIDER=openai
+# anthropic>=0.34       # uncomment to enable LLM_PROVIDER=anthropic
