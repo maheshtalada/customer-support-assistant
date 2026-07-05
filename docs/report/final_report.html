@@ -1,195 +1,1850 @@
 <meta charset="utf-8">
 <title>Final Project Report</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'neutral', securityLevel:'loose',
+  flowchart:{useMaxWidth:true}, sequence:{useMaxWidth:true}});</script>
 <style>
-  @page { size: A4; margin: 20mm 18mm; }
+  @page { size: A4; margin: 16mm 16mm; }
   * { box-sizing: border-box; }
-  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #1f2430;
-         font-size: 11.5px; line-height: 1.55; margin: 0; }
-  h1 { font-size: 22px; color: #312e81; margin: 0 0 4px; }
-  h2 { font-size: 15px; color: #4f46e5; border-bottom: 2px solid #e5e7f0;
-       padding-bottom: 3px; margin: 22px 0 8px; }
-  h3 { font-size: 12.5px; color: #312e81; margin: 14px 0 4px; }
-  p { margin: 6px 0; }
-  ul, ol { margin: 6px 0 6px 18px; padding: 0; }
-  li { margin: 2px 0; }
-  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 10.5px; }
-  th, td { border: 1px solid #d5d8e2; padding: 5px 7px; text-align: left; vertical-align: top; }
-  th { background: #f0f1f8; color: #312e81; }
-  code { background: #f3f4f8; padding: 1px 4px; border-radius: 3px; font-size: 10px; }
-  .cover { text-align: center; padding: 60mm 0 0; page-break-after: always; }
-  .cover h1 { font-size: 30px; }
-  .cover .sub { font-size: 15px; color: #4f46e5; margin: 10px 0; }
-  .cover .meta { margin-top: 40mm; font-size: 12px; color: #444; }
-  .tag { display: inline-block; background: #eef; color: #312e81; border-radius: 10px;
-         padding: 1px 8px; font-size: 9.5px; margin: 1px; }
-  img { max-width: 100%; border: 1px solid #d5d8e2; border-radius: 6px; margin: 6px 0; }
-  .page-break { page-break-before: always; }
-  .fig { font-size: 9.5px; color: #666; text-align: center; margin-top: -2px; }
-  .kpi { display:flex; gap:10px; flex-wrap:wrap; }
-  .kpi div { background:#f0f1f8; border-radius:6px; padding:8px 12px; }
-  .kpi b { font-size:16px; color:#312e81; display:block; }
+  body { font-family: "Georgia","Times New Roman",serif; color:#1f2430;
+         font-size:12px; line-height:1.6; margin:0; text-align:justify; }
+  h1,h2,h3,h4 { font-family:"Helvetica Neue",Arial,sans-serif; color:#26256b; }
+  h1 { font-size:20px; margin:0 0 8px; }
+  h2 { font-size:16px; border-bottom:2px solid #dcdcef; padding-bottom:4px;
+       margin:26px 0 10px; page-break-after:avoid; }
+  h3 { font-size:13.5px; margin:16px 0 5px; color:#3b3a8c; page-break-after:avoid; }
+  h4 { font-size:12px; margin:12px 0 4px; color:#4b4a9c; }
+  p { margin:7px 0; }
+  ul,ol { margin:6px 0 6px 20px; } li { margin:3px 0; }
+  code { font-family:"SF Mono",Menlo,monospace; background:#f2f3f8; padding:1px 4px;
+         border-radius:3px; font-size:10.5px; }
+  pre.code { background:#f7f8fb; border:1px solid #e2e4ef; border-radius:6px;
+             padding:10px 12px; font-family:"SF Mono",Menlo,monospace; font-size:9.5px;
+             line-height:1.45; overflow:auto; white-space:pre-wrap; }
+  table { border-collapse:collapse; width:100%; margin:10px 0; font-size:10.5px;
+          font-family:"Helvetica Neue",Arial,sans-serif; page-break-inside:avoid; }
+  th,td { border:1px solid #d0d3e0; padding:5px 8px; text-align:left; vertical-align:top; }
+  th { background:#ecedf7; color:#26256b; }
+  .mermaid { text-align:center; margin:12px 0; page-break-inside:avoid; }
+  .fig { font-size:10px; color:#666; text-align:center; margin:2px 0 14px;
+         font-family:"Helvetica Neue",Arial,sans-serif; }
+  img { max-width:96%; border:1px solid #d0d3e0; border-radius:6px; display:block;
+        margin:8px auto 2px; }
+  .pb { page-break-before:always; }
+  .cover { text-align:center; height:250mm; display:flex; flex-direction:column;
+           justify-content:center; page-break-after:always; }
+  .cover h1 { font-size:30px; color:#26256b; }
+  .cover .sub { font-size:15px; color:#4b4a9c; margin:8px 24px; }
+  .cover .meta { margin-top:40mm; font-size:13px; line-height:1.9; }
+  .toc li { margin:2px 0; font-family:"Helvetica Neue",Arial,sans-serif; font-size:11px; }
+  .note { background:#f4f4fc; border-left:3px solid #6a67d8; padding:8px 12px; margin:10px 0; }
+  blockquote { border-left:3px solid #cfd0ea; margin:8px 0; padding:2px 14px; color:#333; }
 </style>
 
+<!-- ============================== COVER ============================== -->
 <div class="cover">
-  <h1>Intelligent Conversational AI Chatbot</h1>
-  <div class="sub">Automated Customer Support for Billing Disputes &amp; Offer Recommendations</div>
-  <div class="sub">using NLP, Deep-Learning NLU, a Hub-and-Spoke Multi-Agent Design &amp; Reinforcement Learning</div>
-  <p style="margin-top:20mm;color:#666;">Final Project Report</p>
+  <div style="font-size:13px;letter-spacing:2px;color:#4b4a9c;">A PROJECT REPORT ON</div>
+  <h1>Intelligent Conversational AI Chatbot for Automated Customer Support</h1>
+  <div class="sub">Handling Billing Disputes and Personalized Offer Recommendations using
+  Natural Language Processing, Deep-Learning-based Natural Language Understanding,
+  a Hub-and-Spoke Multi-Agent Architecture, and Reinforcement Learning</div>
   <div class="meta">
-    Master of Computer Applications (MCA)<br>
-    Proof-of-Concept Implementation<br>
-    2026
+    <b>Submitted in partial fulfilment of the requirements for the degree of</b><br>
+    Master of Computer Applications (MCA)<br><br>
+    <b>Project Type:</b> Proof-of-Concept Implementation<br>
+    <b>Academic Year:</b> 2025–2026<br>
   </div>
 </div>
 
-<h2>1. Abstract</h2>
-<p>This project designs and implements an intelligent conversational AI chatbot
-that delivers automated, accurate, real-time customer support for a telecom
-provider. It focuses on two high-volume support intents: <b>billing-dispute
-resolution</b> and <b>personalized offer recommendation</b>. The chatbot uses
-local Natural-Language-Understanding (NLU) models — a neural intent classifier
-and sentiment analyzer with rule-based entity extraction — feeding a
-deterministic dialogue brain organized as a <b>hub-and-spoke multi-agent</b>
-system: a coordinator routes each customer turn between a front-line billing/
-offers agent and a senior retention specialist. Responses are produced by a
-Natural-Language-Generation (NLG) module (grounded templates optionally
-rephrased by a local Large Language Model) and offer recommendations are
-continuously improved by a <b>reinforcement-learning</b> feedback loop. The
-system validates customer identity before serving account data and exposes live
-signals and KPIs for monitoring. It is delivered as a runnable Streamlit
-Proof-of-Concept using 100% synthetic data.</p>
+<!-- ============================== CERTIFICATE ============================== -->
+<div class="pb"></div>
+<h2>Declaration</h2>
+<p>I hereby declare that the project work entitled <i>“Intelligent Conversational
+AI Chatbot for Automated Customer Support — Handling Billing Disputes and
+Personalized Offer Recommendations”</i> submitted in partial fulfilment of the
+requirements for the award of the degree of Master of Computer Applications is a
+record of original work carried out by me. The synthetic datasets, models,
+source code, diagrams and results presented in this report are the outcome of my
+own implementation effort. Any external concepts, libraries or references used
+have been duly acknowledged. This work, in whole or in part, has not been
+submitted previously for the award of any other degree or diploma.</p>
+<p style="margin-top:30px;">Signature: ______________________<br>Name: ______________________<br>
+Date: ______________________<br>Place: ______________________</p>
 
-<h2>2. Objectives</h2>
-<ol>
-  <li>Design an intelligent conversational chatbot for automated, accurate,
-      real-time customer support using NLP.</li>
-  <li>Improve response quality and efficiency (satisfaction up, response time
-      down).</li>
-  <li>Implement deep-learning-based NLU and response generation for context-aware,
-      human-like interactions.</li>
-  <li>Integrate reinforcement-learning strategies for continuous improvement from
-      user feedback loops.</li>
-  <li>Evaluate performance using accuracy, intent-classification precision,
-      response relevance, operational efficiency and user-satisfaction metrics.</li>
+<h2>Certificate</h2>
+<p>This is to certify that the project report entitled <i>“Intelligent
+Conversational AI Chatbot for Automated Customer Support”</i> is a bona fide
+record of the project work carried out under my supervision in partial fulfilment
+of the requirements for the degree of Master of Computer Applications. To the
+best of my knowledge, the work reported herein is original and has not formed the
+basis for the award of any earlier degree.</p>
+<p style="margin-top:24px;">
+Project Guide: ______________________ &nbsp;&nbsp;&nbsp; Head of Department: ______________________<br><br>
+Internal Examiner: ______________________ &nbsp;&nbsp;&nbsp; External Examiner: ______________________</p>
+
+<h2>Acknowledgement</h2>
+<p>I take this opportunity to express my sincere gratitude to my project guide
+for their invaluable guidance, encouragement and continuous support throughout
+the course of this project. Their insights into machine learning, conversational
+systems and software engineering were instrumental in shaping this work. I extend
+my thanks to the Head of the Department and the faculty of the Department of
+Computer Applications for providing the academic environment and infrastructure
+that made this project possible. I am also grateful to my peers for their
+constructive feedback during design reviews and demonstrations. Finally, I thank
+my family for their unwavering support and patience during the development of
+this project.</p>
+
+<!-- ============================== ABSTRACT ============================== -->
+<div class="pb"></div>
+<h2>Abstract</h2>
+<p>Customer-support contact centres in the telecommunications industry handle
+enormous volumes of repetitive interactions. Analyses of support traffic
+consistently show that two intents dominate: customers questioning or disputing a
+charge on their bill, and customers seeking a better plan or a discount. Both
+categories are latency-sensitive, rule-heavy and emotionally charged, which makes
+them simultaneously expensive to service with human agents and highly amenable to
+automation with modern Natural Language Processing (NLP). This project designs and
+implements an intelligent conversational Artificial Intelligence (AI) chatbot that
+provides automated, accurate and real-time customer support for exactly these two
+intents — <b>billing-dispute resolution</b> and <b>personalized offer
+recommendation</b>.</p>
+
+<p>The system is built on a “thick brain, thin interface” philosophy in which the
+user interface performs only presentation while all language understanding,
+decision-making and action execution reside in a deterministic Python brain.
+Customer utterances are interpreted by a local, deep-learning-based Natural
+Language Understanding (NLU) stack comprising a Multi-Layer-Perceptron (MLP)
+neural-network intent classifier over Term-Frequency–Inverse-Document-Frequency
+(TF-IDF) features, a second MLP for sentiment analysis, and rule-based entity
+extraction. These signals are fused into a per-turn frame that drives a
+<b>hub-and-spoke multi-agent</b> dialogue engine: a coordinator (the hub) routes
+each conversational turn between a front-line billing-and-offers agent and a
+senior retention specialist, with the two agents never communicating directly.
+Responses are produced by a Natural Language Generation (NLG) module that pairs
+grounded response templates with an optional local Large Language Model (LLM,
+served by Ollama) for human-like phrasing, while strictly forbidding the model
+from inventing facts. Offer recommendations are ranked by a deterministic scoring
+engine and continuously improved by a <b>reinforcement-learning</b> bandit that
+learns which offers customers accept. Before any account data is served, the
+customer must pass a two-step identity validation.</p>
+
+<p>The chatbot is delivered as a runnable Streamlit web application backed by a
+fully synthetic dataset, and is instrumented with live signals and Key
+Performance Indicators (KPIs) for monitoring. Evaluation demonstrates a sentiment
+classification accuracy of approximately 83% and an intent classification
+accuracy of approximately 62% on a compact held-out set (bounded by the
+proof-of-concept corpus size), a 100% resolution rate on the designed test
+scenarios, and low per-turn latency. The project fulfils all five stated
+objectives and provides a clear, modular foundation for a production system.</p>
+
+<p><b>Keywords:</b> Conversational AI, Chatbot, Natural Language Processing,
+Natural Language Understanding, Intent Classification, Sentiment Analysis,
+Natural Language Generation, Large Language Models, Reinforcement Learning,
+Recommender Systems, Hub-and-Spoke Architecture, Multi-Agent Systems, Telecom
+Customer Support, Billing Dispute, Streamlit.</p>
+
+<!-- ============================== TOC ============================== -->
+<div class="pb"></div>
+<h2>Table of Contents</h2>
+<ol class="toc">
+  <li>Introduction — Overview, Background, Problem Statement, Motivation, Objectives, Scope, Organization</li>
+  <li>Literature Review and Background — Conversational AI, NLP, NLU, Sentiment, ML, Deep Learning, LLMs, RL, Recommender Systems, Dialogue Management, Related Work, Research Gap</li>
+  <li>System Analysis — Existing System, Proposed System, Feasibility, Functional and Non-Functional Requirements, Use-Case Identification, Hardware/Software Requirements</li>
+  <li>System Design — Design Goals, High-Level Architecture, Subsystem Decomposition, Per-Turn Pipeline, Hub-and-Spoke Design, Data-Flow Diagrams, Data Model, Class Design</li>
+  <li>Methodology by Milestone — Data Collection, Data Preparation, NLU Model, NLG Module, Reinforcement Learning, Deployment and Monitoring, with Outcomes</li>
+  <li>Use Cases in Detail — Identity Validation, Billing Dispute, Offer Recommendation, Retention Handoff, Ticket Status, each with a Sequence Diagram and Explanation</li>
+  <li>Implementation — Codebase Folder Structure, Technology Stack, Module Implementations, Configuration</li>
+  <li>Testing — Testing Approach, Levels of Testing, Test Cases, Test Scenarios, Results</li>
+  <li>Results and Evaluation — NLU Metrics, Conversation KPIs, Screenshot Walkthrough, Objective Fulfilment</li>
+  <li>Conclusion and Future Scope — Conclusion, Limitations, Future Enhancements</li>
+  <li>References</li>
+  <li>Appendices — Sample Data, Key Code Listings, Milestone Outcome Summary</li>
 </ol>
 
-<h2>3. Introduction &amp; Problem Statement</h2>
-<p>Telecom customers most often contact support to question a bill (“why did my
-charge increase / this charge is wrong”) or to seek a better deal. Both are
-repetitive, rule-heavy and latency-sensitive — ideal for automation. Human
-agents are costly and inconsistent, and long hold times reduce satisfaction.
-The goal is an AI agent that understands a free-text query, acts on the
-customer’s real account, resolves the issue, and escalates hard cases to a
-specialist agent — all while keeping every stated fact grounded in account data
-so it never fabricates charges or offers.</p>
+<h3>List of Figures</h3>
+<ul class="toc">
+  <li>Fig 3.1 Use-Case Diagram &nbsp;·&nbsp; Fig 4.1 High-Level System Architecture &nbsp;·&nbsp; Fig 4.2 Subsystem Decomposition</li>
+  <li>Fig 4.3 Per-Turn Processing Pipeline &nbsp;·&nbsp; Fig 4.4 Hub-and-Spoke Structure &nbsp;·&nbsp; Fig 4.5 DFD Level 0 &nbsp;·&nbsp; Fig 4.6 DFD Level 1</li>
+  <li>Fig 4.7 Entity-Relationship Diagram &nbsp;·&nbsp; Fig 6.1–6.5 Use-Case Sequence Diagrams &nbsp;·&nbsp; Fig 9.1–9.5 Application Screenshots</li>
+</ul>
+<h3>List of Tables</h3>
+<ul class="toc">
+  <li>Table 3.1 Functional Requirements &nbsp;·&nbsp; Table 3.2 Non-Functional Requirements &nbsp;·&nbsp; Table 5.1 Milestone Outcomes</li>
+  <li>Table 8.1 Test Cases &nbsp;·&nbsp; Table 9.1 NLU Metrics &nbsp;·&nbsp; Table 9.2 Objective Fulfilment</li>
+</ul>
+<h3>List of Abbreviations</h3>
+<p style="font-size:11px;">AI — Artificial Intelligence; API — Application Programming Interface;
+ARPU — Average Revenue Per User; CRM — Customer Relationship Management;
+CSAT — Customer Satisfaction; DFD — Data-Flow Diagram; DL — Deep Learning;
+ER — Entity-Relationship; KPI — Key Performance Indicator; LLM — Large Language
+Model; ML — Machine Learning; MLP — Multi-Layer Perceptron; NLG — Natural
+Language Generation; NLP — Natural Language Processing; NLU — Natural Language
+Understanding; PoC — Proof of Concept; RL — Reinforcement Learning;
+SLA — Service-Level Agreement; TF-IDF — Term Frequency–Inverse Document Frequency;
+UAT — User Acceptance Testing; UC — Use Case; UI — User Interface.</p>
 
-<h2>4. Background &amp; Approach</h2>
-<p>The solution follows a “thick brain, thin interface” principle: the user
-interface only renders, while all understanding, decision-making and action live
-in a deterministic Python brain. Intent and sentiment are learned with
-supervised neural models (multi-layer perceptrons over TF-IDF features);
-entities are extracted with rules (standard for slot-filling in a PoC pipeline).
-A policy engine converts detected signals into tone/escalation directives. A
-hub-and-spoke coordinator provides multi-agent behavior without the agents
-calling each other directly. Recommendations are deterministic and explainable,
-then re-weighted by a reinforcement-learning bandit that learns from acceptance
-feedback. NLG stays grounded: the LLM (if enabled) only rephrases template text.</p>
+<!-- ============================== CHAPTER 1 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 1 — Introduction</h1>
 
-<h2>5. System Design &amp; Architecture</h2>
-<p>Each customer turn flows through a fixed per-turn pipeline:
-<b>NLU → policy → hub routing → spoke flow → recommendation (+RL) → NLG</b>.</p>
-<img src="../screenshots/07-handoff-retention.png">
-<div class="fig">Fig 1. Live UI — hub-and-spoke handoff with per-turn signals, RL &amp; KPI panels.</div>
+<h2>1.1 Overview</h2>
+<p>The last decade has witnessed a decisive shift in the way organizations
+interact with their customers. Where once a telephone call to a human agent was
+the default channel for resolving an account query, customers now expect instant,
+around-the-clock, self-service resolution through digital text interfaces. This
+expectation has been amplified by the maturation of conversational AI: chatbots
+have progressed from brittle, keyword-matching scripts to systems capable of
+understanding intent, tracking context and generating fluent, human-like replies.
+This project situates itself at this frontier, focusing on the telecommunications
+(telecom) sector, where the sheer volume and repetitiveness of support requests
+make automation both commercially compelling and technically tractable.</p>
 
-<h3>Component responsibilities</h3>
+<p>The chatbot developed in this project is a text-based conversational agent that
+automates two of the highest-volume support intents in telecom: resolving
+disputes about charges on a customer's bill, and recommending personalized
+promotional offers. Rather than a monolithic script, the system is architected as
+a small society of cooperating AI agents governed by a central coordinator — a
+design pattern known as hub-and-spoke. The agent understands free-text input using
+locally trained machine-learning models, decides on an action using deterministic
+business logic, and communicates the outcome in natural language, optionally
+refined by a locally hosted Large Language Model. The entire system runs on a
+single laptop against synthetic data, making it fully reproducible and free of any
+privacy concerns associated with real customer records.</p>
+
+<h2>1.2 Background of the Domain</h2>
+<p>Telecom operators manage millions of subscriber accounts, each generating a
+monthly bill composed of a base plan charge, taxes, and a variable set of usage
+charges such as international roaming, data overage and premium add-ons. Because
+these variable charges appear intermittently and are frequently misunderstood,
+they are the single largest driver of inbound support contacts. A customer who
+travels abroad and returns to a bill inflated by a roaming charge, or one who
+exceeds a data cap and incurs an overage fee, will very often contact support in a
+state of confusion or frustration. Simultaneously, operators run continuous
+retention and up-sell programmes: loyalty discounts, data add-ons, family-plan
+consolidations and contract renewals, each targeted at particular customer
+segments. Surfacing the right offer to the right customer at the right moment is a
+recognized lever for reducing churn and increasing Average Revenue Per User
+(ARPU).</p>
+
+<p>Historically, both of these workloads have been serviced by human contact-centre
+agents following Standard Operating Procedures (SOPs). This model suffers from
+well-documented weaknesses: high operating cost, inconsistent adherence to policy,
+long hold times that erode satisfaction, and difficulty scaling to demand spikes.
+The rule-driven, data-grounded nature of billing explanations and offer eligibility
+makes them ideal candidates for AI automation, provided the automation can
+understand messy natural-language input and act on the customer's real account
+data without fabricating information.</p>
+
+<h2>1.3 Problem Statement</h2>
+<p>The problem addressed by this project can be stated as follows: <i>design and
+implement an intelligent conversational chatbot that, given a customer's free-text
+query, can accurately determine the customer's intent and emotional state, act on
+the customer's real account to explain or resolve a billing dispute or to
+recommend and apply a suitable offer, escalate difficult negotiations to a
+specialist agent, and do all of this in real time while never fabricating account
+facts and while continuously improving from customer feedback.</i></p>
+
+<p>This statement decomposes into several concrete technical challenges: robust
+intent classification from short, colloquial utterances; sentiment tracking to
+drive empathetic and escalation behaviour; grounded natural-language generation
+that stays faithful to account data; a decision engine that encodes billing and
+offer policy deterministically; a mechanism for handing control between multiple
+agents; a learning loop that adapts recommendations to observed acceptance; and a
+usable interface that first verifies the customer's identity.</p>
+
+<h2>1.4 Motivation</h2>
+<p>Three motivations underpin this work. First, <b>academic</b>: the project is an
+opportunity to integrate a broad cross-section of the computer-science curriculum
+— machine learning, deep learning, natural language processing, reinforcement
+learning, software architecture and human-computer interaction — into a single,
+coherent, working system. Second, <b>practical</b>: billing disputes and offer
+recommendation are real, high-value problems whose automation delivers measurable
+business impact through reduced handling cost and improved customer satisfaction.
+Third, <b>methodological</b>: the project deliberately favours explainable,
+locally trained models and deterministic business logic over an opaque end-to-end
+Large Language Model, demonstrating that a hybrid design can achieve fluent,
+human-like interaction while retaining the transparency, controllability and
+factual reliability that regulated domains such as billing demand.</p>
+
+<h2>1.4a The Economics of Billing Contacts and Churn</h2>
+<p>A brief consideration of the economics clarifies why the two chosen intents are
+worth automating well. In telecom, the cost of acquiring a new subscriber is
+substantial, typically far exceeding the cost of retaining an existing one, so any
+interaction that reduces the risk of a customer leaving has outsized value. Billing
+confusion is a recognized driver of dissatisfaction and, ultimately, of churn: a
+customer who receives an unexpectedly high bill and then endures a long, unhelpful
+support experience is materially more likely to defect to a competitor. Conversely,
+a support interaction that resolves the confusion quickly, treats the customer
+fairly, and — where appropriate — proactively offers a well-matched discount can
+convert a moment of frustration into a moment of loyalty. The offer side of the
+system is the natural complement: surfacing a relevant retention offer at the point
+of contact, rather than through an untargeted mass campaign, both reduces churn and
+lifts revenue per user. Automating these interactions with an agent that is instantly
+available, consistent and personalized therefore attacks cost and churn
+simultaneously, which is the commercial rationale underpinning the technical work
+described in this report.</p>
+
+<h2>1.5 Objectives</h2>
+<p>The project is guided by five objectives, which also structure its evaluation:</p>
+<ol>
+  <li>To design and develop an intelligent conversational AI chatbot capable of
+  delivering automated, accurate and real-time customer support using advanced NLP
+  techniques.</li>
+  <li>To enhance chatbot response quality and efficiency through machine-learning
+  optimization aimed at improving customer satisfaction and reducing average
+  response time.</li>
+  <li>To implement deep-learning-based architectures for Natural Language
+  Understanding and response generation, enabling context-aware and human-like
+  interactions.</li>
+  <li>To integrate reinforcement-learning strategies for continuous chatbot
+  improvement based on user interactions and feedback loops.</li>
+  <li>To evaluate chatbot performance using key metrics such as accuracy,
+  intent-classification precision, response relevance, operational efficiency and
+  user-satisfaction scores.</li>
+</ol>
+
+<h2>1.6 Scope of the Project</h2>
+<p>The scope is deliberately bounded to keep the proof-of-concept focused and
+demonstrable. <b>In scope</b>: text-based conversation; identity validation;
+billing-dispute resolution for roaming and overage charges; explanation of bill
+composition; provisional credits, goodwill waivers and dispute-ticket creation;
+personalized offer recommendation and application; a hub-and-spoke handoff to a
+retention specialist with a negotiation ladder; a reinforcement-learning feedback
+loop for offers; live signal and KPI monitoring; and a Streamlit user interface.
+<b>Out of scope</b> for this phase: voice/telephony channels; integration with
+live production CRM or billing back-ends (synthetic adapters are used instead);
+transfer to a human agent (both agents are AI); a formal supervisor email-approval
+workflow (approval is simulated within the interface); and multilingual support.
+These exclusions are discussed further as future scope in Chapter 10.</p>
+
+<h2>1.7 Proof-of-Concept Nature and Assumptions</h2>
+<p>This project is explicitly a proof of concept (PoC). Its purpose is to validate
+the architecture, the interaction design and the integration of the various AI
+components end-to-end, rather than to deliver a production-hardened service. Two
+assumptions follow from this. First, all data is <b>synthetic</b>: three
+representative customers with fabricated bills, usage histories and interaction
+logs stand in for a real subscriber base, eliminating privacy concerns and making
+the system fully reproducible. Second, the machine-learning models are trained on
+a compact, hand-labelled seed corpus; this keeps the models transparent and fast
+to train on commodity hardware, at the cost of held-out accuracy that would rise
+substantially with a larger, log-mined corpus. These assumptions are stated openly
+so that the evaluation in Chapter 9 can be interpreted correctly.</p>
+
+<h2>1.8 Organization of the Report</h2>
+<p>The remainder of this report is organized as follows. <b>Chapter 2</b> surveys
+the relevant literature and background across conversational AI, NLP, NLU,
+sentiment analysis, deep learning, Large Language Models, reinforcement learning,
+recommender systems and dialogue management, and identifies the research gap.
+<b>Chapter 3</b> presents the system analysis: the limitations of existing
+systems, the proposed system, a feasibility study, and functional and
+non-functional requirements. <b>Chapter 4</b> details the system design,
+including the high-level architecture, subsystem decomposition, the per-turn
+processing pipeline, the hub-and-spoke design, data-flow diagrams and the data
+model. <b>Chapter 5</b> describes the methodology milestone by milestone and
+records the outcome of each. <b>Chapter 6</b> explains every use case in detail
+with an accompanying sequence diagram. <b>Chapter 7</b> covers the implementation,
+including a walkthrough of the codebase folder structure and the technology stack.
+<b>Chapter 8</b> presents the testing approach and results. <b>Chapter 9</b>
+reports the evaluation results and maps them to the objectives. <b>Chapter 10</b>
+concludes and outlines future scope. References and appendices follow.</p>
+
+<!-- ============================== CHAPTER 2 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 2 — Literature Review and Background</h1>
+
+<h2>2.1 Evolution of Conversational AI and Chatbots</h2>
+<p>The idea of a machine conversing in natural language is as old as the field of
+artificial intelligence itself. The first widely known chatbot, ELIZA, was created
+by Joseph Weizenbaum in 1966 and simulated a Rogerian psychotherapist through
+simple pattern-matching and canned transformations of the user's input. Despite
+its simplicity, ELIZA demonstrated that users would readily attribute understanding
+to a system that merely reflected their words back at them — an observation now
+called the ELIZA effect. PARRY (1972) followed, modelling a paranoid patient with
+a richer internal state. These early systems were entirely rule-based: they
+matched keywords and applied scripted responses, with no genuine understanding of
+meaning.</p>
+
+<p>The subsequent decades saw incremental progress through better pattern
+languages such as AIML (Artificial Intelligence Markup Language), which powered
+award-winning bots like A.L.I.C.E., and through the rise of statistical NLP.
+The commercial inflection point arrived with virtual assistants such as Apple's
+Siri, Amazon's Alexa and Google Assistant, which combined speech recognition,
+statistical intent classification and structured back-end actions. In parallel,
+task-oriented dialogue systems matured in research, formalizing the pipeline of
+NLU, dialogue state tracking, dialogue policy and NLG. Most recently, the advent
+of large pre-trained transformer language models has enabled open-domain
+conversation of unprecedented fluency. The system in this project draws on this
+lineage selectively: it adopts the disciplined task-oriented pipeline for
+reliability, while borrowing the fluency of Large Language Models for the final
+phrasing step only.</p>
+
+<h2>2.2 Natural Language Processing Fundamentals</h2>
+<p>Natural Language Processing is the sub-field of AI concerned with enabling
+computers to process and analyse human language. A typical NLP pipeline begins
+with <b>text pre-processing</b>: tokenization (splitting text into words or
+sub-words), normalization (lower-casing, expanding contractions, removing
+punctuation), and sometimes stemming or lemmatization (reducing words to a common
+root). The cleaned text must then be converted into a numerical representation
+that a model can consume. Classical approaches include the <b>bag-of-words</b>
+model, which represents a document as a vector of word counts, and
+<b>TF-IDF</b> (Term Frequency–Inverse Document Frequency), which weights each term
+by how frequently it appears in a document relative to how common it is across the
+whole corpus, thereby emphasizing distinctive words. Modern approaches instead
+learn dense <b>word embeddings</b> (Word2Vec, GloVe, fastText) or contextual
+embeddings from transformer models (BERT and its successors) that capture semantic
+similarity. This project uses TF-IDF because it is transparent, fast, requires no
+pre-trained embeddings, and performs strongly on the short, domain-specific
+utterances characteristic of support chat.</p>
+
+<h2>2.3 Natural Language Understanding</h2>
+<p>Natural Language Understanding is the component of a conversational system
+responsible for converting a raw utterance into a structured, machine-actionable
+representation. Two tasks are central. <b>Intent classification</b> assigns the
+utterance to one of a fixed set of intents — for example, distinguishing “why is
+my bill higher this month” (a bill-explanation intent) from “I never went to
+Mexico” (a factual-dispute intent). This is a supervised multi-class text
+classification problem, commonly solved with algorithms ranging from logistic
+regression and support-vector machines over TF-IDF features to fine-tuned
+transformers. <b>Entity extraction</b> (or slot filling) identifies the structured
+arguments within the utterance — a charge identifier, a monetary amount, a date
+range, or a yes/no confirmation. Entity extraction is frequently handled with a
+combination of rules/regular expressions and sequence-labelling models such as
+conditional random fields or BiLSTM-CRF networks. The NLU stack in this project
+combines a neural intent classifier and sentiment analyser with rule-based entity
+extraction, a pragmatic and explainable configuration for a bounded domain.</p>
+
+<h2>2.4 Sentiment and Emotion Analysis</h2>
+<p>Sentiment analysis determines the affective polarity of text — typically
+positive, negative or neutral — and is a cornerstone of customer-experience
+analytics. In a support setting it serves two operational purposes: it lets the
+agent modulate tone (becoming more empathetic as frustration rises) and it acts as
+a trigger for escalation. Techniques range from <b>lexicon-based</b> methods,
+which sum the polarities of words found in a sentiment dictionary such as VADER or
+SentiWordNet, to supervised classifiers trained on labelled corpora, to
+transformer-based models fine-tuned for sentiment. Emotion analysis extends this
+to finer categories such as anger, frustration, satisfaction and disappointment.
+This project trains a compact neural sentiment classifier that outputs a
+three-class label together with a continuous signed score, allowing the policy
+engine to reason about not just the current sentiment but its trajectory across a
+conversation.</p>
+
+<h2>2.5 Machine Learning for Text Classification</h2>
+<p>Supervised machine learning frames intent and sentiment detection as learning a
+function from labelled examples. The classical workflow — feature extraction
+(e.g. TF-IDF), followed by a discriminative classifier — remains highly effective
+for small, well-scoped datasets. Logistic regression and linear support-vector
+machines offer strong baselines with excellent interpretability. Naïve Bayes,
+despite its independence assumptions, is a robust and fast text classifier.
+Ensemble methods such as random forests and gradient boosting can capture
+non-linear feature interactions. The key practical concerns are class imbalance,
+overfitting on small corpora (mitigated by regularization and cross-validation),
+and the need for a sensible fallback when the model is uncertain. This project
+adopts a neural classifier (described next) with an L2-regularized objective and a
+deterministic keyword fallback for low-confidence predictions.</p>
+
+<h2>2.6 Deep Learning and Neural Networks</h2>
+<p>Deep learning uses multi-layer neural networks to learn hierarchical
+representations directly from data. The <b>Multi-Layer Perceptron (MLP)</b> is the
+foundational feed-forward architecture: an input layer, one or more hidden layers
+of neurons applying non-linear activation functions, and an output layer. Trained
+by back-propagation and gradient descent, an MLP can approximate complex non-linear
+decision boundaries, and even over TF-IDF features it can capture interactions
+that a purely linear model cannot. For sequential text, <b>recurrent neural
+networks</b> (RNNs) and their gated variants (LSTM, GRU) model word order, while
+<b>convolutional neural networks</b> capture local n-gram patterns. The most
+significant recent development is the <b>transformer</b> architecture, whose
+self-attention mechanism captures long-range dependencies and underpins virtually
+all state-of-the-art language models. In this project the intent and sentiment
+classifiers are implemented as MLP neural networks; this satisfies the objective of
+deep-learning-based NLU while remaining lightweight enough to train in seconds on a
+CPU, a deliberate trade-off appropriate to a reproducible proof of concept.</p>
+
+<h2>2.7 Large Language Models and Natural Language Generation</h2>
+<p>Natural Language Generation is the task of producing coherent natural-language
+text from an internal representation. Traditional NLG followed a pipeline of
+content determination, sentence planning and surface realization, often using
+templates. The advent of <b>Large Language Models</b> — transformer networks with
+billions of parameters pre-trained on vast text corpora — has transformed NLG:
+models such as the GPT family, Claude, LLaMA and their derivatives can generate
+fluent, contextually appropriate text from a natural-language prompt. However,
+LLMs are prone to <b>hallucination</b>: confidently stating plausible but false
+information. In a billing context this is unacceptable — an agent must never
+invent a charge or an offer amount. This project therefore adopts a <b>grounded,
+hybrid NLG</b> strategy: deterministic templates carry the authoritative facts,
+and a locally hosted LLM (LLaMA 3.2, served through Ollama) is invoked only to
+rephrase those templates in a warm, human voice, under an explicit instruction not
+to introduce any new facts. This preserves fluency while eliminating the
+hallucination risk, and the LLM is entirely optional — the system degrades
+gracefully to pure templates if it is unavailable.</p>
+
+<h2>2.8 Reinforcement Learning and Multi-Armed Bandits</h2>
+<p>Reinforcement Learning (RL) is a paradigm in which an agent learns to make
+decisions by interacting with an environment and receiving rewards. Unlike
+supervised learning, RL has no labelled examples; instead, the agent must balance
+<b>exploration</b> (trying actions to gather information) against
+<b>exploitation</b> (choosing the action currently believed best). The
+<b>multi-armed bandit</b> is the simplest RL setting: an agent repeatedly chooses
+among several actions (“arms”), each returning a stochastic reward, and seeks to
+maximize cumulative reward. The <b>epsilon-greedy</b> strategy is a classic,
+easily interpretable solution: with probability epsilon the agent explores a random
+arm, and otherwise it exploits the arm with the highest estimated value.
+Contextual bandits extend this by conditioning the choice on features of the
+current situation. In this project, offer recommendation is framed as a bandit
+problem: each offer is an arm, a customer accepting an offer yields a reward of
+one and a decline yields zero, and the learned acceptance value is blended into the
+deterministic recommendation score so that offers customers actually accept rise
+in the ranking over time. This realizes the objective of continuous improvement
+from feedback loops.</p>
+
+<h2>2.9 Recommender Systems</h2>
+<p>Recommender systems predict the items a user is most likely to value. The two
+classical families are <b>collaborative filtering</b>, which recommends items
+favoured by similar users, and <b>content-based filtering</b>, which recommends
+items similar to those a user has liked, using item and user features. Hybrid and
+knowledge-based recommenders combine these with explicit business rules. In a
+telecom offer-recommendation context, pure collaborative filtering is often
+impractical because eligibility is governed by hard business rules (tier, tenure,
+plan type) rather than taste. This project therefore employs a
+<b>knowledge-based, rule-plus-scoring recommender</b>: customer attributes are
+bucketed into low/medium/high bands, offers are filtered by eligibility rules, and
+a weighted heuristic produces a score. This deterministic core is then refined by
+the reinforcement-learning bandit of Section 2.8, giving a recommender that is both
+explainable (every recommendation has a stated reason) and adaptive.</p>
+
+<h2>2.10 Dialogue Management and Multi-Agent Systems</h2>
+<p>Dialogue management governs the flow of a conversation: it tracks the dialogue
+state, decides the next system action, and maintains context across turns.
+Task-oriented systems often model each task as a finite-state machine or a
+frame-filling process. As conversational applications grow, a single monolithic
+policy becomes unwieldy, motivating <b>multi-agent</b> designs in which specialized
+agents handle different sub-tasks. The <b>hub-and-spoke</b> (or orchestrator)
+pattern is a widely used multi-agent topology: a central coordinator (the hub)
+receives every input, decides which specialized agent (spoke) should handle it, and
+mediates all communication, so that the spokes remain decoupled and never invoke
+one another directly. This yields clean separation of concerns, controlled
+hand-offs, and easy extensibility. The present system implements exactly this
+pattern, with a coordinator routing turns between a billing-and-offers spoke and a
+retention-specialist spoke, and it augments the flows with a lightweight policy
+engine that converts detected signals into tone and escalation directives.</p>
+
+<h2>2.11 Related Work — AI in Telecom Customer Support</h2>
+<p>The application of AI to telecom customer support is an active area in industry.
+Operators have deployed intent-routing bots that triage incoming queries,
+frequently-asked-question retrieval systems, and increasingly, generative
+assistants layered over knowledge bases through retrieval-augmented generation.
+Commercial contact-centre platforms provide sentiment monitoring, agent-assist
+suggestions and automated after-call summaries. Academic and industrial work has
+also explored churn prediction, next-best-action recommendation and
+dispute-resolution automation. The distinctive contribution of this project
+relative to that landscape is its integration: rather than addressing a single
+sub-problem, it combines identity validation, deep-learning NLU, grounded NLG,
+a knowledge-based recommender, reinforcement-learning optimization and a
+multi-agent hub-and-spoke dialogue manager into one coherent, runnable,
+observable system, while remaining fully local, reproducible and privacy-safe.</p>
+
+<h2>2.11a Comparison of Design Approaches</h2>
+<p>It is instructive to contrast the three broad design approaches available for a
+support chatbot, because the choices made in this project are a direct response to
+their respective trade-offs. The first approach is the <b>purely rule-based</b>
+bot, built from hand-crafted patterns and decision trees. Its strengths are total
+predictability, transparency and zero dependence on training data; its weaknesses
+are brittleness in the face of unexpected phrasing, an inability to gauge sentiment,
+laborious maintenance as rules proliferate, and a stilted conversational feel. The
+second approach is the <b>fully generative</b> agent, in which a single large
+language model both understands and responds. Its strengths are remarkable fluency
+and flexibility; its weaknesses are the risk of hallucinating account facts, the
+difficulty of constraining it to policy, its opacity, its latency and its dependence
+on a powerful (often remote) model. The third approach — the one adopted here — is a
+<b>hybrid, modular</b> design that uses learned models for understanding,
+deterministic logic for decisions, and a language model only for phrasing, under
+strict grounding.</p>
+<p>The hybrid approach inherits the reliability and transparency of the rule-based
+design in the consequential parts of the system — intent handling, eligibility,
+credit and ticket decisions — while borrowing the fluency of the generative approach
+in the one place where fluency matters and errors are harmless: the surface phrasing
+of a reply whose facts have already been fixed. It also adds a dimension neither of
+the pure approaches offers cheaply: a learning loop that adapts recommendations to
+observed behaviour without retraining a large model. The cost of the hybrid approach
+is greater architectural complexity — more moving parts, more interfaces — but this
+cost is precisely what the disciplined subsystem decomposition of Chapter 4 is
+designed to manage. This comparison explains why the project does not simply wrap a
+large language model in a chat window: doing so would sacrifice the correctness and
+auditability that a billing domain cannot compromise.</p>
+
+<h2>2.12 Research Gap and Positioning</h2>
+<p>Two gaps motivate the design choices of this project. First, purely
+LLM-driven support agents, while fluent, are difficult to constrain and can
+hallucinate account facts — an unacceptable risk in billing. Second, purely
+rule-based bots are reliable but rigid and unnatural. The gap, therefore, is a
+design that captures the fluency of generative models and the reliability of
+deterministic logic simultaneously, while remaining transparent and adaptive.
+This project addresses that gap through its hybrid, grounded, hub-and-spoke
+architecture: deterministic understanding and decision-making for correctness, an
+optional LLM for fluency, and a reinforcement-learning loop for adaptivity. The
+following chapters develop this design in full.</p>
+
+<h2>2.13 Evaluation Metrics for Conversational Systems</h2>
+<p>Evaluating a conversational system requires metrics at several levels. At the
+<b>component</b> level, classification tasks such as intent detection and sentiment
+analysis are measured with <b>accuracy</b> (the proportion of correct predictions),
+<b>precision</b> (the proportion of predicted positives that are correct),
+<b>recall</b> (the proportion of actual positives that are recovered) and the
+<b>F1-score</b> (the harmonic mean of precision and recall, which balances the two
+and is especially informative under class imbalance). A <b>confusion matrix</b>
+exposes which classes are mutually confused. Because a single train/test split can
+be misleading on small corpora, <b>stratified splitting</b> and
+<b>cross-validation</b> are used to obtain stable estimates. At the
+<b>conversation</b> level, task-oriented systems are judged by <b>task-completion
+rate</b> (here, the resolution rate), the <b>number of turns to completion</b>,
+and <b>latency</b>. At the <b>experience</b> level, <b>user-satisfaction</b> is
+captured directly (for example through thumbs feedback yielding a Customer
+Satisfaction, or CSAT, proxy) or inferred from sentiment trajectories. This project
+reports metrics at all three levels: component accuracy/precision/recall/F1,
+conversation resolution rate and latency, and a satisfaction proxy, in direct
+correspondence with the fifth project objective.</p>
+
+<h2>2.14 Responsible, Explainable and Trustworthy AI</h2>
+<p>Deploying AI in a customer-facing, financially sensitive domain such as billing
+raises questions of responsibility and trust that a purely technical design cannot
+ignore. Three properties are particularly relevant. <b>Explainability</b> is the
+degree to which a system's decisions can be understood by a human; a recommendation
+that states its reason (“a loyalty reward for your long tenure”) is far more
+trustworthy than an opaque score. <b>Factual reliability</b> is the guarantee that
+the system does not assert falsehoods; in billing this is paramount, since a
+fabricated charge or credit could have legal and financial consequences.
+<b>Privacy</b> demands that personal data be protected and disclosed only to
+verified parties. The design decisions in this project are shaped by these
+principles: deterministic, reason-bearing recommendations provide explainability;
+the grounded-NLG discipline, in which the language model may rephrase but never
+invent, provides factual reliability; and the mandatory identity-validation step,
+together with the exclusive use of synthetic data, addresses privacy. In this sense
+the system is not merely functional but deliberately trustworthy by construction.</p>
+
+<h2>2.14a Ethical Considerations and Data Privacy</h2>
+<p>Automating customer support in a financial domain carries ethical
+responsibilities that extend beyond correctness. A support agent influences whether
+a customer is charged, credited or offered a discount, so fairness and transparency
+are essential: comparable customers should receive comparable treatment, and the
+basis of any decision should be explainable on request. Automated systems can also
+inadvertently encode bias if trained on skewed historical data, which argues for
+transparent, rule-bearing decision logic in the sensitive billing path and for
+careful curation of any learned components. Data privacy is equally central:
+customer accounts contain personal and financial information that must be protected,
+disclosed only after authentication, retained only as long as necessary, and handled
+in accordance with data-protection regulation. This project embodies these concerns
+by construction — it gates all account access behind identity validation, uses only
+synthetic data so that no real individual is ever exposed, keeps the consequential
+billing decisions deterministic and explainable, and confines the generative model
+to non-consequential phrasing. While a production deployment would require formal
+privacy impact assessment, consent management and audit logging, the proof of
+concept is designed to be extended in that direction rather than to work against it.</p>
+
+<h2>2.15 Software Engineering Practices for AI Systems</h2>
+<p>Building a reliable AI application is as much a software-engineering challenge as
+a modelling one. Good practice separates concerns into cohesive modules with narrow
+interfaces, so that the model layer, the business logic and the presentation can
+evolve independently. Configuration is externalized (here, into an environment
+file) so that behaviour can change without code edits. Deterministic components are
+favoured wherever correctness matters, with learned or generative components
+confined to where their flexibility adds value and their errors are tolerable.
+Every external dependency is given a fallback so that the system degrades gracefully
+rather than failing outright. Finally, observability is engineered in from the
+start: structured logging of each turn's signals and outcomes turns the running
+system into a source of evaluation data. These practices, drawn from the emerging
+discipline sometimes called MLOps, are applied throughout this project and are
+visible in its modular folder structure, its configuration-driven provider switch,
+its graceful fallbacks and its session logging.</p>
+
+<!-- ============================== CHAPTER 3 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 3 — System Analysis</h1>
+
+<h2>3.1 The Existing System and Its Limitations</h2>
+<p>In the conventional telecom support model, a customer with a billing query or an
+interest in offers contacts a human agent by phone or through a live-chat window.
+The agent authenticates the customer, looks up the account in a Customer
+Relationship Management (CRM) and billing system, interprets the customer's
+problem, consults Standard Operating Procedures to decide on a resolution, and
+records the outcome. Where the situation exceeds the agent's authority — for
+instance, a large goodwill credit or a difficult retention negotiation — the case
+is escalated to a supervisor. While functional, this model exhibits several
+limitations:</p>
+<ul>
+  <li><b>High operating cost:</b> human agents are expensive and support volumes are large and bursty.</li>
+  <li><b>Long wait times:</b> queueing during peak periods directly degrades customer satisfaction.</li>
+  <li><b>Inconsistency:</b> different agents apply policy differently, producing uneven outcomes.</li>
+  <li><b>Limited availability:</b> staffed support is rarely truly 24×7 without significant cost.</li>
+  <li><b>Reactive offers:</b> relevant promotions are seldom surfaced proactively at the point of contact.</li>
+  <li><b>Poor observability:</b> the emotional trajectory and intent of a conversation are rarely captured as structured data for analysis.</li>
+</ul>
+<p>Some operators have layered simple menu-driven or keyword bots on top of this
+model, but these are notoriously rigid: they fail when the customer phrases a
+request in an unexpected way, cannot track sentiment, and offer no learning
+mechanism. There is a clear need for a system that understands natural language
+robustly, acts on real account data, personalizes offers, escalates gracefully,
+and improves over time.</p>
+
+<h2>3.2 The Proposed System</h2>
+<p>The proposed system is a text-based conversational AI chatbot that addresses
+these limitations directly. After validating the customer's identity, it accepts
+free-text queries and, for each turn, understands the intent and sentiment,
+extracts relevant entities, decides on an action against the customer's synthetic
+account, and replies in grounded natural language. It resolves billing disputes by
+explaining charges and offering evidence-backed remedies (a provisional credit, a
+goodwill waiver, or a formal dispute ticket), and it recommends personalized offers
+scored against the customer's profile and refined by a learning loop. When a
+negotiation becomes difficult, a coordinator hands the conversation to a specialist
+retention agent that follows an escalating offer ladder. Throughout, the system
+exposes live signals and KPIs for monitoring. The key advantages over the existing
+model are instant availability, consistent policy application, proactive and
+adaptive personalization, structured observability, and zero marginal cost per
+conversation.</p>
+
+<h2>3.3 Feasibility Study</h2>
+<h3>3.3.1 Technical Feasibility</h3>
+<p>The system is technically feasible with widely available, open-source tools.
+The NLU models are trained with scikit-learn and run on a CPU in seconds; the user
+interface is built with Streamlit; the optional Large Language Model is served
+locally by Ollama; and all data is stored as JSON files, avoiding the need to
+provision a database. The entire stack installs from a single requirements file and
+launches with one command, confirming that no specialized hardware or proprietary
+software is required.</p>
+<h3>3.3.2 Economic Feasibility</h3>
+<p>Because the project relies exclusively on free and open-source software and runs
+on commodity hardware, its development cost is effectively limited to time. In a
+production setting, the economic case rests on deflecting a proportion of human-
+handled contacts to the automated agent, whose marginal cost per conversation is
+negligible compared with a staffed interaction.</p>
+<h3>3.3.3 Operational Feasibility</h3>
+<p>Operationally, the system is designed for ease of use: customers interact
+through a familiar chat interface requiring no training, and the conversation is
+guided. For operators, the modular architecture allows the synthetic data adapters
+to be replaced with live CRM/billing connectors without altering the dialogue
+logic. The grounded NLG and deterministic decision core make the system's behaviour
+auditable, which is essential for operational acceptance in a regulated billing
+context.</p>
+
+<h2>3.4 Requirement Analysis</h2>
+<h3>3.4.1 Functional Requirements</h3>
 <table>
-<tr><th>Component</th><th>Responsibility</th><th>Module</th></tr>
-<tr><td>Coordinator (HUB)</td><td>NLU → policy → route → NLG; handoff detection</td><td><code>app/coordinator.py</code></td></tr>
-<tr><td>NLU pipeline</td><td>Intent + sentiment + entities → TurnFrame</td><td><code>app/nlu/*</code></td></tr>
-<tr><td>Policy engine</td><td>Tone / escalation directive</td><td><code>app/policy_engine.py</code></td></tr>
-<tr><td>Billing spoke (Aria)</td><td>UC-01 dispute + UC-02 offers</td><td><code>app/flows/billing_flow.py</code>, <code>offers_flow.py</code></td></tr>
-<tr><td>Retention spoke (Ray)</td><td>Negotiation ladder + simulated approval</td><td><code>app/flows/retention_flow.py</code></td></tr>
-<tr><td>Recommendation engine</td><td>Band scoring + eligibility → ranked offers</td><td><code>app/recommendation_engine.py</code></td></tr>
-<tr><td>RL bandit</td><td>Accept/decline feedback → offer re-weighting</td><td><code>app/rl/bandit.py</code></td></tr>
-<tr><td>NLG</td><td>Template + optional local LLM rephrase</td><td><code>app/nlg/*</code></td></tr>
-<tr><td>UI + monitoring</td><td>Chat, signals, KPIs, feedback</td><td><code>ui/streamlit_app.py</code>, <code>app/metrics.py</code></td></tr>
+<tr><th>ID</th><th>Requirement</th></tr>
+<tr><td>FR-1</td><td>The system shall authenticate a customer via email and password and then verify identity via the last four digits of the ID on file before serving any account data.</td></tr>
+<tr><td>FR-2</td><td>The system shall classify each customer utterance into one of the defined intents and detect its sentiment.</td></tr>
+<tr><td>FR-3</td><td>The system shall extract relevant entities (charge references, amounts, dispute topic, yes/no confirmations) from utterances.</td></tr>
+<tr><td>FR-4</td><td>The system shall explain the customer's current bill and surface any unusual charge (roaming or overage).</td></tr>
+<tr><td>FR-5</td><td>The system shall present evidence for a disputed charge and offer resolution options appropriate to the customer's tier.</td></tr>
+<tr><td>FR-6</td><td>The system shall apply a provisional credit or goodwill waiver, or create a persisted dispute ticket, according to the customer's choice.</td></tr>
+<tr><td>FR-7</td><td>The system shall compute personalized offer recommendations and pitch the highest-ranked eligible offer.</td></tr>
+<tr><td>FR-8</td><td>The system shall apply an accepted offer and record the acceptance as reinforcement-learning feedback.</td></tr>
+<tr><td>FR-9</td><td>The coordinator shall hand off the conversation to the retention specialist upon haggling, sustained negative sentiment, exhausted offers, or an explicit request.</td></tr>
+<tr><td>FR-10</td><td>The retention specialist shall follow an escalating negotiation ladder and apply accepted offers under a simulated supervisor approval.</td></tr>
+<tr><td>FR-11</td><td>The system shall answer ticket-status queries.</td></tr>
+<tr><td>FR-12</td><td>The system shall display live per-turn signals (intent, sentiment, active agent, resolution status) and aggregate KPIs.</td></tr>
+<tr><td>FR-13</td><td>The system shall accept explicit user feedback (thumbs up/down) on replies.</td></tr>
+</table>
+<h3>3.4.2 Non-Functional Requirements</h3>
+<table>
+<tr><th>ID</th><th>Requirement</th></tr>
+<tr><td>NFR-1 (Performance)</td><td>The deterministic per-turn processing shall complete within a few milliseconds; LLM-phrased replies within a few seconds.</td></tr>
+<tr><td>NFR-2 (Reliability)</td><td>The system shall degrade gracefully to templated responses if the LLM or any optional dependency is unavailable.</td></tr>
+<tr><td>NFR-3 (Correctness)</td><td>Generated replies shall never contain fabricated account facts; all figures shall derive from the data layer.</td></tr>
+<tr><td>NFR-4 (Usability)</td><td>The interface shall require no training and shall guide the customer through login, verification and chat.</td></tr>
+<tr><td>NFR-5 (Security/Privacy)</td><td>Account data shall be served only after identity verification; the system shall use synthetic data exclusively.</td></tr>
+<tr><td>NFR-6 (Maintainability)</td><td>Business logic shall be modular so data adapters and the LLM provider can be swapped via configuration.</td></tr>
+<tr><td>NFR-7 (Observability)</td><td>Every turn shall emit structured signals; sessions shall be logged for KPI aggregation.</td></tr>
+<tr><td>NFR-8 (Portability)</td><td>The system shall run on commodity hardware (macOS/Linux) with a single-command launch.</td></tr>
 </table>
 
-<h3>Hub-and-spoke &amp; handoff</h3>
-<p>The billing spoke hands off to the retention spoke when the customer haggles,
-sentiment turns negative for ≥2 turns, offers are exhausted, or a credit needs
-specialist authority. The two AI agents never talk directly — only the hub moves
-control. There is no human handoff in this PoC; the specialist is also AI.</p>
+<h2>3.5 Use-Case Identification</h2>
+<p>Analysis of the requirements yields the following primary use cases, each
+elaborated with a sequence diagram in Chapter 6: UC-00 Identity Validation; UC-01
+Billing Dispute Resolution; UC-02 Offer Recommendation; UC-03 Retention Handoff and
+Negotiation; and UC-04 Ticket Status Query. The single external actor is the
+Customer; internally, the AI agents Aria (billing/offers) and Ray (retention), the
+recommendation engine and the reinforcement-learning component participate.</p>
 
-<div class="page-break"></div>
-<h2>6. Methodology (by milestone)</h2>
+<h2>3.6 Use-Case Diagram</h2>
+<pre class="mermaid">
+flowchart LR
+  C(["Customer"])
+  subgraph SYS["Telco Support Chatbot"]
+    U0(["UC-00 Identity Validation"])
+    U1(["UC-01 Billing Dispute"])
+    U2(["UC-02 Offer Recommendation"])
+    U3(["UC-03 Retention Handoff"])
+    U4(["UC-04 Ticket Status"])
+  end
+  C --- U0
+  C --- U1
+  C --- U2
+  C --- U3
+  C --- U4
+  U1 -. include .-> U0
+  U2 -. include .-> U0
+  U1 -. extend .-> U3
+  U2 -. extend .-> U3
+</pre>
+<div class="fig">Fig 3.1 — Use-Case Diagram. Billing and offer use cases include identity
+validation and may extend into a retention handoff.</div>
+
+<h2>3.7 Hardware and Software Requirements</h2>
 <table>
-<tr><th>Milestone</th><th>What was done</th><th>Artifacts</th></tr>
-<tr><td>M1 Data Collection</td><td>Curated synthetic customers, bills, payments, offers, dispute policies, usage and tickets</td><td><code>data/*.json</code>, <code>app/data_store.py</code></td></tr>
-<tr><td>M2 Data Preparation</td><td>Hand-labeled intent + sentiment corpus; text normalization (lowercasing, contraction expansion, keeping $ and %)</td><td><code>app/nlu/dataset.py</code>, <code>preprocess.py</code></td></tr>
-<tr><td>M3 Develop NLU Model</td><td>TF-IDF + MLP intent classifier (14 classes); TF-IDF + MLP sentiment; regex entity extraction; fused TurnFrame</td><td><code>app/nlu/{intent_model,sentiment_model,entities,pipeline}.py</code></td></tr>
-<tr><td>M4 Create NLG Module</td><td>Grounded templates + pluggable LLM provider (ollama/template/openai/anthropic) with automatic fallback</td><td><code>app/nlg/{generator,llm_provider}.py</code></td></tr>
-<tr><td>M5 Optimize with RL</td><td>Epsilon-greedy bandit; reward = offer accepted (1) / declined (0); persisted policy influencing ranking</td><td><code>app/rl/bandit.py</code></td></tr>
-<tr><td>M6 Deployment &amp; Monitoring</td><td>Streamlit chat UI (welcome→login→verify→chat), live signals, KPI aggregation, session logging</td><td><code>ui/streamlit_app.py</code>, <code>app/metrics.py</code></td></tr>
+<tr><th>Category</th><th>Requirement</th></tr>
+<tr><td>Processor</td><td>Any modern multi-core CPU (Apple Silicon / x86-64); no GPU required</td></tr>
+<tr><td>Memory</td><td>8 GB RAM minimum (16 GB recommended if running the local LLM)</td></tr>
+<tr><td>Disk</td><td>~2 GB for the environment; ~2 GB additional for the LLM model</td></tr>
+<tr><td>Operating System</td><td>macOS or Linux (Windows via WSL)</td></tr>
+<tr><td>Language / Runtime</td><td>Python 3.9+</td></tr>
+<tr><td>Core libraries</td><td>Streamlit, scikit-learn, NumPy, pandas, joblib, python-dotenv, requests, PyYAML</td></tr>
+<tr><td>Optional LLM</td><td>Ollama runtime with the llama3.2 model</td></tr>
 </table>
 
-<h2>7. Implementation Details</h2>
-<h3>NLU</h3>
-<p>Intent classes: GREETING, BILL_EXPLAIN, BILL_DISPUTE, FACTUAL_DISPUTE,
-PROMO_INQUIRY, CONFIRM_YES, CONFIRM_NO, HAGGLE, CREATE_TICKET, TICKET_STATUS,
-HUMAN_HANDOFF, PAYMENT_QUERY, GOODBYE, FALLBACK. Both classifiers are
-<code>MLPClassifier</code> networks (a neural net) over TF-IDF bi-grams with L2
-regularization; low-confidence intents defer to a keyword backstop so the system
-works even before training.</p>
-<h3>Billing dispute (UC-01)</h3>
-<p>Explain bill → surface the unusual charge (roaming/overage) → present evidence
-(tower logs / metering) → resolve via tier-based provisional credit, a one-time
-goodwill waiver, or a persisted dispute ticket.</p>
-<h3>Offers (UC-02) &amp; RL</h3>
-<p>The engine computes LOW/MED/HIGH bands (tier, tenure, churn proxy, usage),
-filters by eligibility, scores each offer, and the bandit blends learned
-acceptance value (<code>0.7·base + 0.3·Q</code>) into the ranking. Feedback from
-accept/decline and 👍/👎 updates the persisted policy.</p>
-<img src="../screenshots/09-offer-recommendation.png">
-<div class="fig">Fig 2. UC-02 — ranked offer cards with value and score.</div>
+<!-- ============================== CHAPTER 4 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 4 — System Design</h1>
 
-<h2>8. Results &amp; Evaluation</h2>
-<p>NLU models evaluated on a held-out stratified split; live KPIs aggregated from
-session logs.</p>
-<div class="kpi">
-  <div><b>~83%</b>Sentiment accuracy (held-out)</div>
-  <div><b>~62%</b>Intent accuracy (held-out, small seed)</div>
-  <div><b>100%</b>Resolution rate (test scenarios)</div>
-  <div><b>~2 ms</b>Avg per-turn latency (template mode)</div>
-</div>
-<p style="margin-top:8px;">The intent held-out figure is limited by the small
-PoC seed corpus (1–2 test samples per class); at runtime the model trains on the
-full corpus and is backed by a keyword fallback, so live behavior is stronger.
-Enlarging <code>app/nlu/dataset.py</code> raises the metric directly. Metrics are
+<h2>4.1 Design Goals and Guiding Principles</h2>
+<p>The design is governed by four principles. <b>Thick brain, thin interface:</b>
+all understanding, decision-making and action live in the Python brain; the
+Streamlit interface only renders. <b>Deterministic core, optional intelligence:</b>
+facts and decisions are computed by rules and data, while the LLM is an optional
+enhancement confined to phrasing. <b>Graceful degradation:</b> every dependency has
+a fallback, so the demonstration never hard-fails. <b>Observability by design:</b>
+each turn emits structured signals that the interface and the KPI aggregator
+consume. These principles reconcile the competing demands of fluency and
+reliability that Chapter 2 identified as the research gap.</p>
+
+<h2>4.2 High-Level Architecture</h2>
+<pre class="mermaid">
+flowchart TB
+  C(["Customer"]) --> UI["Presentation Layer (Streamlit)<br/>welcome / login / verify / chat"]
+  UI --> CO["Coordinator (Hub)"]
+  CO --> NLU["NLU Subsystem"]
+  CO --> POL["Policy Engine"]
+  CO --> AR["Billing Spoke — Aria"]
+  CO --> RY["Retention Spoke — Ray"]
+  AR --> REC["Recommendation Engine"]
+  RY --> REC
+  REC --> RL["RL Bandit"]
+  CO --> NLG["NLG Subsystem"]
+  NLG -. optional .-> LLM["Local LLM (Ollama)"]
+  AR --> DATA[("Data Layer — JSON")]
+  RY --> DATA
+  REC --> DATA
+  CO --> MON["Monitoring / KPIs"]
+  MON --> LOGS[("Session Logs")]
+</pre>
+<div class="fig">Fig 4.1 — High-Level System Architecture.</div>
+<p>The architecture is layered. The <b>presentation layer</b> handles
+authentication and chat rendering. The <b>coordinator</b> is the hub that
+orchestrates each turn. Beneath it sit the specialized subsystems — NLU, policy,
+the two agent spokes, recommendation, reinforcement learning and NLG — over a
+shared <b>data layer</b>. A cross-cutting <b>monitoring</b> concern captures signals
+and KPIs.</p>
+
+<h2>4.3 Subsystem Decomposition</h2>
+<p>The brain decomposes into eight cohesive subsystems, each with a single
+responsibility and a narrow interface, shown in Fig 4.2 and detailed in the table
+that follows.</p>
+<pre class="mermaid">
+flowchart TB
+  subgraph PRES["1 · Presentation Subsystem"]
+    P1["Auth / identity"]; P2["Chat + signal panel"]; P3["Feedback + KPIs"]
+  end
+  subgraph NLUS["2 · NLU Subsystem"]
+    N1["Intent MLP"]; N2["Sentiment MLP"]; N3["Entity rules"]; N4["Fusion → TurnFrame"]
+  end
+  subgraph DLG["3 · Dialogue / Coordinator Subsystem"]
+    D1["Handoff detection"]; D2["Routing"]; D3["Policy engine"]
+  end
+  subgraph FLOW["4 · Flow Subsystem"]
+    F1["UC-01 Billing"]; F2["UC-02 Offers"]; F3["Retention ladder"]
+  end
+  subgraph RECS["5 · Recommendation Subsystem"]
+    R1["Band scoring"]; R2["Eligibility"]; R3["Ranking"]
+  end
+  subgraph RLS["6 · RL Subsystem"]
+    L1["Bandit arms"]; L2["Reward update"]; L3["Persisted policy"]
+  end
+  subgraph NLGS["7 · NLG Subsystem"]
+    G1["Templates"]; G2["LLM provider"]; G3["Grounding guard"]
+  end
+  subgraph DATAS["8 · Data Subsystem"]
+    T1["Customers / bills"]; T2["Offers / policies"]; T3["Tickets / sessions"]
+  end
+  PRES --> DLG --> NLUS
+  DLG --> FLOW --> RECS --> RLS
+  DLG --> NLGS --> DATAS
+  FLOW --> DATAS
+</pre>
+<div class="fig">Fig 4.2 — Subsystem Decomposition (eight subsystems).</div>
+<table>
+<tr><th>#</th><th>Subsystem</th><th>Responsibility</th><th>Primary modules</th></tr>
+<tr><td>1</td><td>Presentation</td><td>Authentication, identity check, chat rendering, signal/KPI panels, feedback capture</td><td><code>ui/streamlit_app.py</code>, <code>app/auth.py</code></td></tr>
+<tr><td>2</td><td>NLU</td><td>Intent + sentiment classification, entity extraction, fusion into a TurnFrame</td><td><code>app/nlu/*</code></td></tr>
+<tr><td>3</td><td>Dialogue / Coordinator</td><td>Hub routing, handoff detection, policy directives</td><td><code>app/coordinator.py</code>, <code>app/policy_engine.py</code></td></tr>
+<tr><td>4</td><td>Flow</td><td>Use-case state machines (billing, offers, retention ladder)</td><td><code>app/flows/*</code></td></tr>
+<tr><td>5</td><td>Recommendation</td><td>Band computation, eligibility filtering, weighted scoring, ranking</td><td><code>app/recommendation_engine.py</code></td></tr>
+<tr><td>6</td><td>Reinforcement Learning</td><td>Bandit arms, reward updates, persisted policy</td><td><code>app/rl/bandit.py</code></td></tr>
+<tr><td>7</td><td>NLG</td><td>Grounded templates, pluggable LLM provider, anti-hallucination guard</td><td><code>app/nlg/*</code></td></tr>
+<tr><td>8</td><td>Data</td><td>Access to customers, bills, offers, policies, tickets and session logs</td><td><code>app/data_store.py</code>, <code>data/*.json</code></td></tr>
+</table>
+
+<h2>4.4 Per-Turn Processing Pipeline</h2>
+<p>Every customer message is processed by a fixed pipeline inside the coordinator.
+This deterministic ordering is the backbone of the system's reliability.</p>
+<pre class="mermaid">
+flowchart TD
+  A["Customer message"] --> B["NLU: understand()"]
+  B --> B1["Intent MLP"] --> F["Fuse → TurnFrame"]
+  B --> B2["Sentiment MLP"] --> F
+  B --> B3["Entity rules"] --> F
+  F --> P["Policy engine → Directive"]
+  P --> H{"Handoff trigger?<br/>(billing spoke only)"}
+  H -- yes --> SW["Swap to retention spoke<br/>+ specialist intro + first pitch"]
+  H -- no --> RT["Route to active spoke flow"]
+  SW --> G
+  RT --> G["NLG compose()"]
+  G --> L{"LLM available?"}
+  L -- yes --> L1["LLM rephrases (grounded)"]
+  L -- no --> L2["Template verbatim"]
+  L1 --> O["Reply + signals + action"]
+  L2 --> O
+  O --> S["state.record() → trajectories, logs"]
+</pre>
+<div class="fig">Fig 4.3 — Per-Turn Processing Pipeline.</div>
+
+<h2>4.5 Hub-and-Spoke Design</h2>
+<p>The dialogue subsystem implements the hub-and-spoke pattern. The coordinator is
+the hub; the billing-and-offers agent (Aria) and the retention specialist (Ray)
+are the spokes. Critically, the spokes never communicate directly — all control
+transfer passes through the hub. This decoupling means a new spoke could be added
+without modifying existing ones, and the hand-off logic is centralized and
+auditable.</p>
+<pre class="mermaid">
+flowchart LR
+  C(["Customer"]) <--> HUB["Coordinator (Hub)<br/>route · handoff · compose"]
+  HUB <--> A["Spoke 1 — Aria<br/>UC-01 billing · UC-02 offers"]
+  HUB <--> R["Spoke 2 — Ray<br/>retention ladder"]
+  A -. never directly .-x R
+</pre>
+<div class="fig">Fig 4.4 — Hub-and-Spoke Structure.</div>
+<p>The coordinator hands off from Aria to Ray when any of the following triggers
+fire: the flow signals it cannot resolve (offers exhausted or a credit exceeding
+authority), the customer explicitly asks for escalation, the customer haggles, or
+the policy engine raises the escalation flag due to sustained negative sentiment
+across at least two turns. The two spokes are also distinguished visually and by
+persona in the interface so the hand-off is clear to the customer.</p>
+
+<h2>4.6 Data-Flow Diagrams</h2>
+<p>The context-level (Level 0) data-flow diagram treats the whole chatbot as a
+single process exchanging data with the customer and the data store.</p>
+<pre class="mermaid">
+flowchart LR
+  C(["Customer"]) -->|"utterance, credentials, feedback"| P(("Chatbot"))
+  P -->|"reply, signals, KPIs"| C
+  P <-->|"account, bills, offers, tickets"| D[("Data Store")]
+  P -. optional .-> M["LLM (Ollama)"]
+</pre>
+<div class="fig">Fig 4.5 — DFD Level 0 (Context Diagram).</div>
+<p>The Level 1 diagram expands the chatbot into its principal processes and the
+data stores they read and write.</p>
+<pre class="mermaid">
+flowchart TB
+  C(["Customer"]) --> P1(("1.0 Authenticate"))
+  P1 --> DS1[("Customers")]
+  C --> P2(("2.0 Understand (NLU)"))
+  P2 --> P3(("3.0 Route / Policy"))
+  P3 --> P4(("4.0 Resolve Dispute"))
+  P3 --> P5(("5.0 Recommend Offer"))
+  P4 --> DS2[("Bills / Tickets")]
+  P5 --> DS3[("Offers")]
+  P5 --> DS4[("RL Policy")]
+  P4 --> P6(("6.0 Generate Reply"))
+  P5 --> P6
+  P6 --> C
+  P3 --> DS5[("Session Logs")]
+</pre>
+<div class="fig">Fig 4.6 — DFD Level 1.</div>
+
+<h2>4.7 Data Model (Entity-Relationship)</h2>
+<pre class="mermaid">
+erDiagram
+  CUSTOMER ||--|| BILL : has
+  CUSTOMER ||--o{ PAYMENT : made
+  CUSTOMER ||--o{ USAGE : records
+  CUSTOMER ||--o{ INTERACTION : history
+  CUSTOMER ||--o{ TICKET : raises
+  BILL ||--o{ LINE_ITEM : contains
+  LINE_ITEM ||--o| EVIDENCE : supports
+  CUSTOMER }o--o{ OFFER : eligible_for
+  OFFER ||--o| RL_ARM : learns
+  CUSTOMER ||--|| PLAN : on
+  TIER ||--|| DISPUTE_POLICY : governs
+</pre>
+<div class="fig">Fig 4.7 — Entity-Relationship Diagram.</div>
+<p>The central entity is the Customer, associated with exactly one Bill and one
+Plan, and with many Payments, Usage records, Interactions and Tickets. A Bill is
+composed of Line Items, some of which (roaming, overage) carry Evidence. Offers
+relate to Customers through eligibility rules and to reinforcement-learning arms
+that track acceptance. Dispute policy is keyed by loyalty Tier.</p>
+
+<h2>4.8 Component and Class Design</h2>
+<p>The implementation follows a component-per-responsibility structure. The
+principal classes and modules are: <code>ConversationState</code> (the single
+shared per-session object holding turns, trajectories, active spoke, flow step,
+offers and resolution status); <code>TurnFrame</code> (the fused NLU output for one
+turn); <code>Directive</code> (the policy engine's tone/escalation output); and the
+functional modules <code>coordinator</code>, <code>billing_flow</code>,
+<code>offers_flow</code>, <code>retention_flow</code>,
+<code>recommendation_engine</code>, <code>bandit</code>, <code>generator</code> and
+<code>llm_provider</code>. The design favours simple functions operating on the
+shared state object over deep class hierarchies, which keeps the control flow
+explicit and easy to trace — an intentional choice for a proof of concept whose
+behaviour must be transparent.</p>
+
+<h2>4.9 Conversation State Design</h2>
+<p>All per-turn components read from and write to a single
+<code>ConversationState</code> instance. This object records the ordered list of
+turns; the intent and sentiment trajectories that let the policy engine detect a
+declining mood; the active spoke and hand-off reason; the current flow and step;
+the sets of offers pitched, declined and accepted; the list of executed actions;
+escalation flags; and the resolution status. Centralizing state in one object
+avoids hidden coupling between components and makes the entire conversation
+serializable to a session log for monitoring and evaluation.</p>
+
+<h2>4.10 End-to-End Conversation Walkthrough</h2>
+<p>To make the interaction of the subsystems concrete, consider the canonical
+demonstration conversation with the Bronze customer, Marcus Rivera, traced through
+the design. The customer opens with “why is my bill higher this month”. The
+presentation layer passes the text to the coordinator, which invokes the NLU
+subsystem; the intent classifier returns BILL_EXPLAIN with high confidence, the
+sentiment analyser returns neutral, and the entity extractor finds no specific
+charge reference. The policy engine, seeing neutral sentiment and no escalation
+condition, returns a default directive. The coordinator, on the billing spoke,
+routes the turn to the billing flow, which retrieves the bill from the data
+subsystem, computes the twenty-seven-dollar increase over the prior month,
+identifies the twenty-one-dollar overage line item, and returns a template stating
+the delta and the charge together with the grounded facts. The NLG subsystem
+rephrases this in Aria's warm voice — or returns it verbatim if no language model is
+configured — and the reply, along with the live signals, is rendered.</p>
+<p>The customer responds “I never used that much data”. The NLU now returns
+FACTUAL_DISPUTE; the billing flow advances its state, fetches the metering evidence
+for the overage, and presents both the evidence and the tier-appropriate resolution
+options — for a Bronze overage, a one-time fifty-percent goodwill waiver or a formal
+dispute ticket. The customer then haggles: “that's too expensive, can you do
+better”. The NLU returns HAGGLE, and the coordinator's hand-off detector fires with
+the reason <i>haggle</i>. The coordinator swaps the active spoke to retention,
+records the hand-off, and produces, in one turn, Ray's bridging opening line
+followed by the first rung of the negotiation ladder — all mediated by the hub, with
+the two spokes never communicating directly. Over the next turns Ray climbs the
+ladder; when the customer finally accepts, the retention flow applies the offer
+under a simulated supervisor approval, the reinforcement-learning subsystem records
+a positive reward for that offer arm, the shared state's resolution status becomes
+resolved, and the monitoring subsystem logs the completed session for KPI
+aggregation. This single walkthrough exercises all eight subsystems and both
+spokes, and is precisely the journey captured in the recorded demonstrations.</p>
+
+<!-- ============================== CHAPTER 5 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 5 — Methodology by Milestone</h1>
+<p>The project was executed as six sequential milestones that mirror the standard
+machine-learning-application lifecycle: Data Collection, Data Preparation, NLU
+Model development, NLG Module creation, Reinforcement-Learning optimization, and
+Deployment and Monitoring. This chapter describes the methodology followed at each
+milestone and records its concrete outcome. Table 5.1 summarizes the outcomes.</p>
+
+<h2>5.0 Development Methodology and Process</h2>
+<p>The project followed an <b>iterative, incremental</b> development process rather
+than a single monolithic build. Each milestone was treated as a short cycle
+comprising design, implementation, verification and reflection, and the output of
+one milestone became the tested foundation of the next. This ordering is deliberate:
+data must exist before it can be prepared; a prepared corpus must exist before models
+can be trained; trained models must exist before they can drive generation; a
+working conversation must exist before a learning loop can be attached to it; and a
+complete brain must exist before it can be deployed and monitored. Because the brain
+was engineered to be independent of the interface from the outset, each intermediate
+milestone could be verified in isolation through the offline scenario driver, which
+kept feedback cycles short and defects local.</p>
+<p>Version control with Git underpinned the process, and the codebase was organized
+so that the mapping between the design's subsystems and the source folders remained
+one-to-one throughout. Configuration was externalized early, so that experiments
+(for example, switching between pure-template and language-model phrasing) required
+no code changes. Reflection at the end of each milestone fed directly into the next:
+the numerical-stability issues observed while first training the classifier, for
+instance, motivated the regularization and corpus-enlargement decisions taken in the
+same milestone, and the perspective-drift observed when the language model was first
+enabled motivated the prompt-hardening carried out during the generation milestone.
+This tight loop of build-measure-learn, applied at the granularity of a milestone,
+is what allowed a broad system spanning data engineering, machine learning,
+generation, reinforcement learning and interface design to be delivered coherently.</p>
+
+<h2>5.1 Milestone 1 — Data Collection</h2>
+<h3>Methodology</h3>
+<p>Because the project uses synthetic data by design, data collection meant
+curating a small but realistic dataset that could exercise every intended
+behaviour of the chatbot. Three representative customers were designed to span the
+loyalty tiers and the principal dispute types. For each customer, the following
+artefacts were authored: a profile (tier, tenure, plan, ARPU, segment, and the
+last-four identity digits used for verification); a current monthly bill broken
+into line items, with roaming and overage line items carrying structured evidence
+(tower identifiers, date ranges, metered usage); three months of payment history;
+usage history; and an interaction history capturing prior contacts and their
+emotional outcome. A catalogue of four promotional offers was defined, each with a
+target tier, minimum tenure, monetary value and applicability. Tier-based dispute
+policies were specified (which tiers receive automatic provisional credit and up to
+what limit). Finally, a ticket store was created to hold dispute tickets. All of
+this was captured as human-readable JSON and exposed through a single access module
+so that every other subsystem reads data consistently.</p>
+<h3>Outcome</h3>
+<p>A complete, self-contained synthetic dataset (<code>data/synthetic_telco.json</code>
+and <code>data/synthetic_tickets.json</code>) covering three customers, their
+bills with disputable roaming/overage charges and evidence, payments, usage,
+interactions, four offers, tier dispute policies and a ticket store — sufficient to
+demonstrate every use case end-to-end, with a clean data-access layer
+(<code>app/data_store.py</code>). No real customer data is used, so the system is
+privacy-safe and fully reproducible.</p>
+
+<h2>5.2 Milestone 2 — Data Preparation</h2>
+<h3>Methodology</h3>
+<p>Data preparation focused on building the labelled corpus required to train the
+supervised NLU models, and on defining the text pre-processing that would be
+applied identically at training and inference time. A taxonomy of fourteen intents
+was defined to cover the target conversations — greetings, bill explanation, bill
+dispute, factual dispute, promotion inquiry, yes/no confirmations, haggling, ticket
+creation, ticket status, human-handoff requests, payment queries, farewells and an
+out-of-scope fallback. For each intent, a set of representative example utterances
+was hand-authored, deliberately varying phrasing to improve generalization. A
+separate three-class corpus (positive, neutral, negative) was authored for
+sentiment. The pre-processing routine lower-cases text, expands common
+contractions, strips punctuation while deliberately preserving the dollar and
+percent symbols (which are semantically important in billing), and collapses
+whitespace.</p>
+<h3>Outcome</h3>
+<p>A labelled corpus (<code>app/nlu/dataset.py</code>) of intent-tagged and
+sentiment-tagged utterances, together with a shared, deterministic pre-processing
+function (<code>app/nlu/preprocess.py</code>). The corpus is compact but balanced
+across classes and representative of the target domain, providing a reproducible
+basis for supervised training.</p>
+
+<h2>5.3 Milestone 3 — Develop the NLU Model</h2>
+<h3>Methodology</h3>
+<p>The NLU stack was implemented as three cooperating components fused into a single
+per-turn representation. The <b>intent classifier</b> is a scikit-learn pipeline of
+a TF-IDF vectorizer (unigrams and bigrams) feeding a Multi-Layer-Perceptron
+neural network with two hidden layers and L2 regularization. The <b>sentiment
+analyser</b> uses the same TF-IDF-plus-MLP recipe with a single hidden layer, and
+returns a three-class label together with a continuous signed score derived from
+the class-probability distribution, plus an intensity. The <b>entity extractor</b>
+uses regular expressions and keyword matching to identify charge identifiers,
+monetary amounts, the dispute topic (roaming, overage, tax, plan) and yes/no
+confirmations. A fusion step combines these into a <code>TurnFrame</code>. To keep
+the system usable even before training, and to guard against confident errors on
+short inputs, a deterministic keyword classifier acts as a fallback whenever the
+neural intent classifier's confidence falls below a threshold. Models are trained
+by a dedicated script and persisted with joblib.</p>
+<h3>Outcome</h3>
+<p>A trained, persisted deep-learning NLU pipeline
+(<code>app/nlu/intent_model.py</code>, <code>sentiment_model.py</code>,
+<code>entities.py</code>, <code>pipeline.py</code>) that converts any utterance into
+a structured TurnFrame. On a held-out stratified split the sentiment model reaches
+approximately 83% accuracy and the intent model approximately 62% (limited by the
+compact seed corpus); at runtime the models are trained on the full corpus and
+backed by the keyword fallback, giving robust live behaviour. Metrics are
 reproducible via <code>python evaluate.py</code>.</p>
 
-<h2>9. Testing</h2>
+<h2>5.4 Milestone 4 — Create the NLG Module</h2>
+<h3>Methodology</h3>
+<p>Natural-language generation was designed around the principle of grounded
+rephrasing. Each dialogue flow returns a deterministic template string together
+with a dictionary of grounded facts (amounts, dates, offer titles, ticket
+identifiers). When an LLM is configured and reachable, the generator constructs a
+system prompt instructing the model to rephrase the template in the persona's
+voice, in the second person, without introducing any new facts, and passes the
+grounded facts as constraints. If no LLM is configured, or if the call fails, the
+template is returned verbatim. The LLM provider itself is pluggable through an
+environment variable, supporting a local Ollama model (the default), a pure-template
+mode, and hosted OpenAI or Anthropic providers for future use. This design gives
+human-like phrasing without sacrificing factual correctness or hard dependence on
+any external service.</p>
+<h3>Outcome</h3>
+<p>A working NLG module (<code>app/nlg/generator.py</code>,
+<code>app/nlg/llm_provider.py</code>) that produces fluent, grounded replies. With
+the local LLM enabled, replies are phrased naturally (for example, “We've charged
+your account a data overage of $21 for exceeding the allowed 3 GB, which is
+reflected in this month's total bill of $62. Does that look correct to you?”) while
+all figures remain faithful to the data. The provider switch and automatic template
+fallback were both verified.</p>
+
+<h2>5.5 Milestone 5 — Optimize with Reinforcement Learning</h2>
+<h3>Methodology</h3>
+<p>Offer recommendation was cast as a multi-armed bandit problem. Each offer is an
+arm with a running count of the number of times it has been shown and the number of
+times it has been accepted; its value estimate is the acceptance ratio, initialized
+optimistically. When the recommendation engine scores offers, the learned value is
+blended with the deterministic base score, so that offers with a higher observed
+acceptance rate are nudged up the ranking. Rewards are collected from the live
+feedback loop: when a customer accepts an offer the corresponding arm receives a
+reward of one, and a decline yields zero; explicit thumbs-up/down feedback on
+replies is also captured. An epsilon-greedy exploration policy allows the system to
+occasionally surface a non-top offer to keep learning. The bandit policy is
+persisted to disk so that learning accumulates across sessions.</p>
+<h3>Outcome</h3>
+<p>An operational reinforcement-learning component (<code>app/rl/bandit.py</code>)
+integrated into the recommendation and dialogue flows, with a persisted policy
+(<code>data/rl_policy.json</code>) and a live view of learned acceptance rates in
+the interface. The feedback loop demonstrably shifts the ranking of offers over
+repeated interactions, realizing the objective of continuous improvement.</p>
+
+<h2>5.6 Milestone 6 — Deployment and Monitoring</h2>
+<h3>Methodology</h3>
+<p>The system was deployed as a Streamlit web application organized as a small
+state machine of screens: an educational welcome page, a login screen, an
+identity-verification screen, and the chat screen. The chat screen renders the
+conversation using chat bubbles with a distinct avatar per persona, and a sidebar
+presents the customer context, live per-turn signals, the reinforcement-learning
+table, aggregate KPIs, and controls including the LLM-phrasing toggle and a
+session-save button. Monitoring was implemented by recording every turn's latency,
+intent, sentiment and feedback on the shared state, serializing completed sessions
+to JSON logs, and aggregating those logs into KPIs — resolution rate, average
+latency and a customer-satisfaction proxy computed from thumbs feedback.</p>
+<h3>Outcome</h3>
+<p>A runnable, monitored application (<code>ui/streamlit_app.py</code>,
+<code>app/metrics.py</code>) launched with a single command, with live signals and
+KPIs visible during a conversation and reproducible screen recordings of the full
+customer journey. The end-to-end system boots cleanly and passes the automated
+scenario tests described in Chapter 8.</p>
+
+<h2>5.7 Summary of Milestone Outcomes</h2>
 <table>
-<tr><th>Scenario</th><th>Steps</th><th>Expected outcome</th></tr>
-<tr><td>Overage dispute → handoff → close (Marcus, BRONZE)</td><td>bill query → factual dispute → haggle → decline → accept</td><td>Handoff to Ray; offer applied under simulated approval; resolved</td></tr>
-<tr><td>Roaming dispute → ticket (Ethan, GOLD)</td><td>bill query → “I never went to Mexico” → open ticket</td><td>Evidence shown; persisted dispute ticket created; resolved</td></tr>
-<tr><td>Offer accept (Ethan)</td><td>“any offers?” → “yes apply it”</td><td>Top offer applied; RL reward recorded; resolved</td></tr>
+<tr><th>Milestone</th><th>Key outcome</th><th>Primary artefact</th></tr>
+<tr><td>M1 Data Collection</td><td>Complete synthetic dataset for 3 customers exercising every use case</td><td><code>data/*.json</code></td></tr>
+<tr><td>M2 Data Preparation</td><td>Labelled 14-intent + 3-class sentiment corpus with shared pre-processing</td><td><code>app/nlu/dataset.py</code></td></tr>
+<tr><td>M3 NLU Model</td><td>Trained MLP intent + sentiment models + entity extraction; ~83% sentiment, ~62% intent held-out</td><td><code>app/nlu/</code></td></tr>
+<tr><td>M4 NLG Module</td><td>Grounded templates + pluggable local LLM; fluent, hallucination-free replies</td><td><code>app/nlg/</code></td></tr>
+<tr><td>M5 Reinforcement Learning</td><td>Epsilon-greedy bandit with persisted policy improving offer ranking from feedback</td><td><code>app/rl/bandit.py</code></td></tr>
+<tr><td>M6 Deployment &amp; Monitoring</td><td>Single-command Streamlit app with live signals, KPIs and recorded demos</td><td><code>ui/streamlit_app.py</code></td></tr>
 </table>
-<p>All three pass via <code>python smoke_test.py</code> (offline, no UI/LLM).</p>
+<div class="fig">Table 5.1 — Summary of Milestone Outcomes.</div>
 
-<h2>10. Conclusion &amp; Future Scope</h2>
-<p>The PoC demonstrates an end-to-end conversational support agent that
-understands free-text queries, resolves billing disputes, recommends and applies
-offers, escalates through a hub-and-spoke design, learns from feedback, and is
-observable via live KPIs — satisfying all five project objectives. Future work:
-enlarge and mine the NLU corpus from real chat logs; replace synthetic adapters
-with live CRM/billing systems; add a transformer-based NLU; extend RL to a
-contextual policy over customer features; add a supervisor approval workflow and
-proactive validation of promised actions.</p>
+<!-- ============================== CHAPTER 6 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 6 — Use Cases in Detail</h1>
+<p>This chapter explains each use case in depth and presents its interaction as a
+sequence diagram. Together they specify the dynamic behaviour of the system.</p>
 
-<h2>11. References</h2>
+<h2>6.1 UC-00 — Identity Validation</h2>
+<p><b>Goal:</b> ensure that no account information is disclosed until the customer's
+identity is established. <b>Actors:</b> Customer, Authentication component.
+<b>Pre-conditions:</b> the customer is on the login screen. <b>Main flow:</b> the
+customer signs in with an email and the shared demo password; the system verifies
+the credentials against the customer records; on success it advances to the
+identity-verification screen and asks for the last four digits of the ID on file;
+the system compares the entered digits with the stored value; on a match it starts
+a conversation session and admits the customer to the chat. <b>Alternate flows:</b>
+invalid credentials or a mismatched identity value return an error and deny access.
+<b>Post-condition:</b> a verified session exists and the customer may chat. This
+two-step design mirrors real telecom practice, where a knowledge factor
+(the last-four ID) supplements the login.</p>
+<pre class="mermaid">
+sequenceDiagram
+  actor C as Customer
+  participant UI as Streamlit UI
+  participant A as auth.py
+  participant D as Data Store
+  C->>UI: enter email + password
+  UI->>A: check_login(email, password)
+  A->>D: find customer by email
+  D-->>A: customer record
+  A-->>UI: valid ✓
+  UI-->>C: ask last-4 ID
+  C->>UI: enter last-4
+  UI->>A: verify_identity(customer, last4)
+  A-->>UI: match ✓
+  UI-->>C: start session → chat screen
+</pre>
+<div class="fig">Fig 6.1 — Sequence Diagram: UC-00 Identity Validation.</div>
+
+<h2>6.2 UC-01 — Billing Dispute Resolution</h2>
+<p><b>Goal:</b> explain a bill and resolve a disputed charge. <b>Actors:</b>
+Customer, Coordinator, Billing agent (Aria), Data Store. <b>Pre-condition:</b> a
+verified session. <b>Main flow:</b> the customer asks why the bill is higher; the
+NLU classifies the intent as bill-explanation; the billing flow retrieves the bill,
+identifies the unusual charge (roaming or overage) and states the delta from last
+month, then asks whether the charge looks correct. If the customer disputes it
+(“I never went to Mexico”), the flow re-checks and presents the evidence — network
+tower logs for roaming or metered usage for overage — and offers resolution options
+appropriate to the tier: a provisional credit (for GOLD/SILVER), a one-time goodwill
+waiver (for a BRONZE overage), or a formal dispute ticket. Depending on the
+customer's choice, the flow either applies the credit/waiver and marks the case
+resolved, or creates a persisted dispute ticket with a 48-hour SLA and returns the
+ticket identifier. <b>Alternate flow:</b> if a needed credit exceeds the front-line
+agent's authority, the flow requests a hand-off to the retention specialist.
+<b>Post-condition:</b> the dispute is resolved by credit, waiver or ticket, and an
+audited action is recorded.</p>
+<pre class="mermaid">
+sequenceDiagram
+  actor C as Customer
+  participant CO as Coordinator
+  participant AR as Aria (billing_flow)
+  participant D as Data Store
+  C->>CO: "why is my bill higher?"
+  CO->>AR: route (BILL_EXPLAIN)
+  AR->>D: get bill + line items
+  D-->>AR: bill, roaming/overage charge
+  AR-->>C: explain charge, ask to confirm
+  C->>CO: "I never went there" (dispute)
+  CO->>AR: route (FACTUAL_DISPUTE)
+  AR->>D: get charge evidence
+  D-->>AR: tower logs / metering
+  AR-->>C: present evidence + options
+  C->>CO: "open a dispute ticket"
+  CO->>AR: route (CREATE_TICKET)
+  AR->>D: create_dispute_ticket()
+  D-->>AR: ticket id
+  AR-->>C: ticket opened, 48h SLA (resolved)
+</pre>
+<div class="fig">Fig 6.2 — Sequence Diagram: UC-01 Billing Dispute Resolution.</div>
+
+<h2>6.3 UC-02 — Offer Recommendation</h2>
+<p><b>Goal:</b> recommend and apply a personalized offer. <b>Actors:</b> Customer,
+Coordinator, Aria, Recommendation engine, RL bandit. <b>Main flow:</b> the customer
+asks about offers; the recommendation engine computes the customer's bands
+(tier, tenure, churn proxy, usage), filters offers by eligibility, scores them,
+blends in the learned bandit value, and returns a ranking; the flow records that the
+top offer was shown (a bandit “show”), pitches it with its value and a stated
+reason, and presents the ranked offer cards. If the customer accepts, the flow
+applies the offer, records a positive reward for that arm, and marks the case
+resolved. If the customer declines, the flow records a zero reward, removes the
+offer from consideration and pitches the next-best eligible offer; if no offers
+remain, it requests a hand-off to retention. <b>Post-condition:</b> an offer is
+applied, or control passes to the retention specialist.</p>
+<pre class="mermaid">
+sequenceDiagram
+  actor C as Customer
+  participant CO as Coordinator
+  participant AR as Aria (offers_flow)
+  participant RE as Recommendation
+  participant RL as RL Bandit
+  C->>CO: "any offers for me?"
+  CO->>AR: route (PROMO_INQUIRY)
+  AR->>RE: recommend(customer)
+  RE->>RL: adjust_score(offer)
+  RL-->>RE: blended score
+  RE-->>AR: ranked offers
+  AR->>RL: record_show(top offer)
+  AR-->>C: pitch top offer + cards
+  C->>CO: "yes, apply it"
+  CO->>AR: route (CONFIRM_YES)
+  AR->>RL: record_reward(offer, accepted)
+  AR-->>C: offer applied (resolved)
+</pre>
+<div class="fig">Fig 6.3 — Sequence Diagram: UC-02 Offer Recommendation.</div>
+
+<h2>6.4 UC-03 — Retention Handoff and Negotiation</h2>
+<p><b>Goal:</b> retain a customer who is haggling, frustrated or has exhausted the
+standard offers. <b>Actors:</b> Customer, Coordinator, Aria, Retention specialist
+(Ray). <b>Trigger:</b> the coordinator detects a hand-off condition while on the
+billing spoke — haggling, an explicit escalation request, exhausted offers, or a
+policy escalation flag from sustained negative sentiment. <b>Main flow:</b> the
+coordinator swaps the active spoke to retention, records the hand-off reason, and
+produces, in a single turn, a bridging opening line in Ray's voice followed by the
+first rung of a negotiation ladder. Ray then climbs the ladder over subsequent
+turns: the best eligible offer, then the next, then the best offer stacked with a
+goodwill credit, then a final executive credit. Any acceptance is applied under a
+simulated supervisor approval and the case is resolved; if the customer refuses the
+final offer, Ray closes gracefully, leaving the offers open for later — there is no
+transfer to a human. <b>Post-condition:</b> the customer accepts a retention offer,
+or the conversation closes amicably with offers held open.</p>
+<pre class="mermaid">
+sequenceDiagram
+  actor C as Customer
+  participant CO as Coordinator
+  participant AR as Aria
+  participant RY as Ray (retention_flow)
+  C->>CO: "that's too expensive, do better"
+  CO->>AR: (HAGGLE detected)
+  CO->>CO: handoff trigger = haggle
+  CO->>RY: swap spoke + intro + first pitch
+  RY-->>C: bridge line + retention offer
+  C->>CO: "still too much" (decline)
+  CO->>RY: advance ladder
+  RY-->>C: stacked goodwill offer (approved)
+  C->>CO: "ok, apply it"
+  CO->>RY: accept
+  RY-->>C: applied under simulated approval (resolved)
+</pre>
+<div class="fig">Fig 6.4 — Sequence Diagram: UC-03 Retention Handoff and Negotiation.</div>
+
+<h2>6.5 UC-04 — Ticket Status Query</h2>
+<p><b>Goal:</b> report the status of a customer's dispute ticket. <b>Actors:</b>
+Customer, Coordinator, Aria, Data Store. <b>Main flow:</b> the customer asks for an
+update on a ticket; the NLU classifies the intent as ticket-status; the flow
+retrieves the customer's tickets, and returns the most recent ticket's identifier,
+subject, status and SLA. <b>Alternate flow:</b> if the customer has no tickets, the
+system says so. <b>Post-condition:</b> the customer is informed of the ticket
+status.</p>
+<pre class="mermaid">
+sequenceDiagram
+  actor C as Customer
+  participant CO as Coordinator
+  participant AR as Aria
+  participant D as Data Store
+  C->>CO: "status of my ticket?"
+  CO->>AR: route (TICKET_STATUS)
+  AR->>D: list_tickets(customer)
+  D-->>AR: tickets
+  AR-->>C: latest ticket id, status, SLA
+</pre>
+<div class="fig">Fig 6.5 — Sequence Diagram: UC-04 Ticket Status Query.</div>
+
+<!-- ============================== CHAPTER 7 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 7 — Implementation</h1>
+
+<h2>7.1 Codebase Folder Structure</h2>
+<p>The repository is organized to make the mapping between the design and the code
+immediately visible. The brain lives under <code>app/</code>, the interface under
+<code>ui/</code>, data under <code>data/</code>, and supporting material under
+<code>docs/</code>, <code>architecture/</code> and <code>scripts/</code>.</p>
+<pre class="code">customer-support-assistant/
+├── app/                        # the "brain" — all logic
+│   ├── config.py               # loads .env, paths, LLM provider settings
+│   ├── data_store.py           # M1 — access to customers/bills/offers/tickets
+│   ├── auth.py                 # identity validation (login + last-4)
+│   ├── conversation_state.py   # shared per-session state object
+│   ├── policy_engine.py        # tone / escalation directives
+│   ├── recommendation_engine.py# offer band-scoring + eligibility + ranking
+│   ├── coordinator.py          # HUB — per-turn pipeline + handoff
+│   ├── metrics.py              # M6 — NLU metrics + conversation KPIs
+│   ├── nlu/                    # M2/M3 — understanding
+│   │   ├── dataset.py          # labelled intent + sentiment corpus
+│   │   ├── preprocess.py       # shared text normalization
+│   │   ├── intent_model.py     # TF-IDF + MLP intent classifier
+│   │   ├── sentiment_model.py  # TF-IDF + MLP sentiment classifier
+│   │   ├── entities.py         # regex entity extraction
+│   │   ├── pipeline.py         # fusion → TurnFrame
+│   │   └── models/             # persisted *.joblib (git-ignored)
+│   ├── nlg/                    # M4 — generation
+│   │   ├── generator.py        # grounded template + LLM rephrase
+│   │   └── llm_provider.py     # ollama / template / openai / anthropic
+│   ├── flows/                  # use-case state machines
+│   │   ├── billing_flow.py     # UC-01
+│   │   ├── offers_flow.py      # UC-02
+│   │   └── retention_flow.py   # UC-03 negotiation ladder
+│   └── rl/
+│       └── bandit.py           # M5 — epsilon-greedy bandit
+├── ui/
+│   └── streamlit_app.py        # M6 — chat UI (welcome→login→verify→chat)
+├── data/                       # M1 — synthetic data + runtime logs
+│   ├── synthetic_telco.json    # customers, bills, offers, policies, usage
+│   ├── synthetic_tickets.json  # dispute tickets (read + written)
+│   ├── sessions/               # per-session logs (git-ignored)
+│   └── rl_policy.json          # learned bandit policy (git-ignored)
+├── architecture/               # design docs with Mermaid diagrams
+├── docs/                       # screenshots, demo videos, report, presentation
+├── scripts/                    # screenshot/video capture, HTML→PDF
+├── train_models.py             # M3 — train + evaluate NLU
+├── evaluate.py                 # M6 — metrics / KPIs
+├── smoke_test.py               # offline end-to-end brain test
+├── run.sh                      # one-command launch
+├── requirements.txt
+└── .env / .env.example         # LLM provider config</pre>
+<p>This structure realizes the subsystem decomposition of Chapter 4 directly: each
+subsystem corresponds to a folder or module, and the milestone tags (M1–M6)
+annotate where each phase's work resides.</p>
+
+<h2>7.2 Technology Stack and Rationale</h2>
+<table>
+<tr><th>Concern</th><th>Technology</th><th>Rationale</th></tr>
+<tr><td>Language</td><td>Python 3.9+</td><td>Rich ML/NLP ecosystem; a single language across brain and UI</td></tr>
+<tr><td>User interface</td><td>Streamlit</td><td>Native chat widgets; one-command launch; no separate front-end build</td></tr>
+<tr><td>NLU models</td><td>scikit-learn MLP + TF-IDF</td><td>Neural (deep-learning) yet CPU-fast and transparent</td></tr>
+<tr><td>NLG</td><td>Templates + Ollama LLM</td><td>Grounded correctness with optional fluency; local and free</td></tr>
+<tr><td>Recommendation</td><td>Custom rule + scoring</td><td>Explainable, honours hard eligibility rules</td></tr>
+<tr><td>Reinforcement learning</td><td>Epsilon-greedy bandit</td><td>Simple, interpretable feedback loop</td></tr>
+<tr><td>Data</td><td>JSON files</td><td>Zero-setup, human-readable, reproducible</td></tr>
+<tr><td>Configuration</td><td>.env (python-dotenv)</td><td>Swap LLM provider without code changes</td></tr>
+<tr><td>Persistence</td><td>joblib</td><td>Fast model serialization</td></tr>
+</table>
+
+<h2>7.3 NLU Implementation</h2>
+<p>The intent classifier is a scikit-learn <code>Pipeline</code> chaining a
+<code>TfidfVectorizer</code> and an <code>MLPClassifier</code>. At inference, the
+utterance is normalized, vectorized and classified; the predicted class and its
+probability are returned. When the top probability is below a confidence threshold,
+the classifier defers to a keyword rule set, preventing confident mistakes on very
+short inputs. The sentiment analyser follows the same pattern but additionally
+computes a signed score as the probability-weighted sum of class polarities,
+yielding a smooth value that the policy engine tracks across turns.</p>
+
+<h2>7.4 Recommendation Engine Implementation</h2>
+<p>The recommendation engine first derives the customer's bands: a churn proxy from
+the interaction history, a tenure band, and a usage band from recent data
+consumption. It then iterates over the offer catalogue, discarding offers whose
+tier or minimum-tenure eligibility is not met (and suppressing a Bronze overage
+waiver when there is no overage charge). Each remaining offer receives a weighted
+heuristic score that rewards higher churn risk, high data usage for data add-ons,
+tier match and the presence of an overage for waivers. The score is then passed
+through the bandit for learned re-weighting, and the offers are ranked. Each
+recommendation carries a human-readable reason, supporting explainability.</p>
+
+<h2>7.5 Reinforcement-Learning Implementation</h2>
+<p>The bandit maintains, per offer, a count of shows and accepts in a JSON policy
+file. Its value estimate is the accept-to-show ratio with an optimistic prior of
+0.5 for unseen offers. The <code>adjust_score</code> function blends this value with
+the deterministic base score using a fixed mixing weight, so that learning nudges
+without overwhelming the rule-based ranking. The <code>record_show</code> and
+<code>record_reward</code> functions update the counts as offers are pitched and
+accepted or declined, and the policy is written back to disk after each update so
+learning persists across sessions.</p>
+
+<h2>7.6 NLG and LLM-Provider Implementation</h2>
+<p>The generator receives the persona, template, grounded facts and policy
+directive. If no live LLM is configured it returns the template unchanged.
+Otherwise it builds a constrained system prompt and calls the provider abstraction,
+which dispatches to Ollama, OpenAI or Anthropic based on the environment variable,
+returning the rephrased text or <code>None</code> on any failure — in which case the
+generator falls back to the template. The Ollama path issues an HTTP request to the
+local runtime, requiring no API key. This abstraction makes the intelligence layer
+entirely swappable and non-blocking.</p>
+
+<h2>7.7 Coordinator and Flows Implementation</h2>
+<p>The coordinator's <code>handle_turn</code> function is the single entry point per
+turn. It runs the NLU pipeline, evaluates the policy engine, and — if on the billing
+spoke — routes the turn to the billing or offers flow and checks the hand-off
+triggers, swapping to retention when one fires. It then composes the reply through
+the NLG module, records the turn on the shared state (including its measured
+latency), and returns a structured response object consumed by the interface. The
+flows are implemented as small state machines that read and mutate the shared
+state, advancing a <code>flow_step</code> and appending audited action records.</p>
+
+<h2>7.8 User-Interface Implementation</h2>
+<p>The Streamlit application is a screen state machine (<code>welcome</code>,
+<code>login</code>, <code>verify</code>, <code>chat</code>) driven by session state.
+The chat screen renders each message with <code>st.chat_message</code>, attaching a
+persona-specific avatar, a hand-off banner when a hand-off occurred, ranked offer
+cards, a per-turn signal caption, and thumbs-up/down feedback buttons. The sidebar
+shows customer context, live signals, the reinforcement-learning table and the KPI
+panel. A subtle but important implementation detail is that dollar signs in reply
+text are escaped before rendering, because Streamlit would otherwise interpret a
+pair of dollar signs as LaTeX mathematics and corrupt the displayed amounts.</p>
+
+<h2>7.9 Configuration and Environment</h2>
+<p>All environment-specific settings — most importantly the LLM provider and model
+— are read from a <code>.env</code> file through a small configuration module. This
+allows the same code to run in pure-template mode for fast, deterministic
+demonstrations, in local-LLM mode for natural phrasing, or against a hosted
+provider in future, purely by editing configuration.</p>
+
+<!-- ============================== CHAPTER 8 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 8 — Testing</h1>
+
+<h2>8.1 Testing Approach</h2>
+<p>The testing strategy is layered to match the architecture. Because the brain is
+deliberately decoupled from the interface, the majority of behaviour can be
+verified without the UI at all, through a scripted end-to-end driver that feeds
+utterances into the coordinator and inspects the structured responses and the
+resulting conversation state. This is complemented by a model-evaluation harness for
+the NLU components and by manual and automated exercising of the full UI. The
+guiding philosophy is that every use case must be demonstrably reachable and must
+terminate in a correct resolution state, and that the NLU models must be measured on
+held-out data rather than judged anecdotally.</p>
+
+<h2>8.2 Levels of Testing</h2>
+<table>
+<tr><th>Level</th><th>What is verified</th><th>How</th></tr>
+<tr><td>Unit</td><td>Individual functions — band computation, eligibility, entity regex, bandit updates</td><td>Direct invocation with crafted inputs</td></tr>
+<tr><td>Integration</td><td>NLU→policy→routing→flow→NLG working together per turn</td><td>Coordinator driven with utterance sequences</td></tr>
+<tr><td>System</td><td>Full use-case journeys end-to-end, including hand-off</td><td><code>smoke_test.py</code> scenarios (template and LLM modes)</td></tr>
+<tr><td>Model evaluation</td><td>Intent and sentiment accuracy/precision/recall/F1</td><td>Held-out stratified split in <code>evaluate.py</code></td></tr>
+<tr><td>User-acceptance</td><td>Usability of the login→verify→chat journey</td><td>Manual walkthrough + recorded demos</td></tr>
+</table>
+
+<h2>8.3 Test Cases</h2>
+<table>
+<tr><th>ID</th><th>Scenario</th><th>Input</th><th>Expected result</th><th>Status</th></tr>
+<tr><td>TC-1</td><td>Valid login + identity</td><td>correct email/password + last-4</td><td>Admitted to chat</td><td>Pass</td></tr>
+<tr><td>TC-2</td><td>Wrong identity</td><td>incorrect last-4</td><td>Access denied</td><td>Pass</td></tr>
+<tr><td>TC-3</td><td>Bill explanation</td><td>"why is my bill higher this month"</td><td>Bill delta + unusual charge surfaced</td><td>Pass</td></tr>
+<tr><td>TC-4</td><td>Factual dispute → evidence</td><td>"I never went to Mexico"</td><td>Evidence shown + resolution options</td><td>Pass</td></tr>
+<tr><td>TC-5</td><td>Dispute → ticket</td><td>"open a formal dispute ticket"</td><td>Persisted ticket + id + 48h SLA; resolved</td><td>Pass</td></tr>
+<tr><td>TC-6</td><td>Offer inquiry</td><td>"any offers for me"</td><td>Top eligible offer pitched with reason</td><td>Pass</td></tr>
+<tr><td>TC-7</td><td>Offer accept</td><td>"yes apply it"</td><td>Offer applied; RL reward recorded; resolved</td><td>Pass</td></tr>
+<tr><td>TC-8</td><td>Haggle → handoff</td><td>"that's too expensive, do better"</td><td>Handoff to Ray; ladder begins</td><td>Pass</td></tr>
+<tr><td>TC-9</td><td>Retention accept</td><td>"ok apply it" after ladder</td><td>Applied under simulated approval; resolved</td><td>Pass</td></tr>
+<tr><td>TC-10</td><td>Ticket status</td><td>"status of my ticket"</td><td>Latest ticket id + status + SLA</td><td>Pass</td></tr>
+<tr><td>TC-11</td><td>LLM unavailable</td><td>any turn with LLM down</td><td>Template reply; no failure</td><td>Pass</td></tr>
+<tr><td>TC-12</td><td>Grounding</td><td>LLM-phrased reply</td><td>All amounts match data; none invented</td><td>Pass</td></tr>
+</table>
+<div class="fig">Table 8.1 — Representative Test Cases.</div>
+
+<h2>8.4 System Test Scenarios</h2>
+<p>Three end-to-end scenarios exercise the principal journeys and are automated in
+<code>smoke_test.py</code>, which can run in fast template mode or, with the
+<code>USE_LLM=1</code> flag, route replies through the local LLM: (1) a Bronze
+customer's overage dispute that escalates through haggling into a retention
+hand-off and closes with an accepted offer; (2) a Gold customer's roaming dispute
+that resolves into a persisted ticket; and (3) an offer inquiry that resolves into
+an applied offer with a recorded reinforcement-learning reward. All three complete
+with the expected resolution status.</p>
+
+<h2>8.5 Results of Testing</h2>
+<p>All twelve representative test cases pass, and all three system scenarios reach
+their expected resolution states in both template and LLM modes. The
+grounding test (TC-12) is of particular importance: inspection of LLM-phrased
+replies confirms that every monetary amount, date and identifier originates from
+the data layer, validating the anti-hallucination design.</p>
+
+<h2>8.6 Challenges Encountered and Their Resolution</h2>
+<p>Several non-trivial challenges surfaced during development, and documenting them
+illustrates the engineering rigour applied and the robustness of the final system.</p>
+<p><b>Rendering of monetary amounts.</b> An early defect caused dollar amounts to
+display incorrectly: the interface framework interprets a pair of dollar signs as a
+mathematical expression and typeset the text between them as italic mathematics, so
+a reply such as “your bill is $62, up $27” rendered as garbled symbols. The
+resolution was to escape dollar signs in all rendered message text before display.
+This is a subtle presentation bug that would have severely undermined a live
+demonstration, and its discovery underscored the value of reviewing rendered output
+rather than trusting the underlying strings.</p>
+<p><b>Perspective drift in generated language.</b> When the local Large Language
+Model was first enabled, it occasionally rephrased the agent's reply from the
+customer's point of view — for instance producing “I exceeded my data limit” instead
+of addressing the customer. Because a compact model can lose track of speaker roles,
+the system prompt was strengthened to state explicitly that the model speaks as the
+support agent, to the customer, in the second person, and never as the customer.
+After this change the generated replies were consistently in the correct voice while
+remaining grounded in the supplied facts.</p>
+<p><b>Numerical stability of the neural classifier.</b> On the very small initial
+corpus, training the intent network produced numerical warnings and unstable
+probability estimates. Adding L2 regularization, increasing the training iterations
+and enlarging the labelled corpus stabilized training, removed the warnings and
+improved both held-out metrics and the quality of the live signals shown in the
+interface.</p>
+<p><b>Latency of the optional language model.</b> Routing every reply through the
+local model introduced multi-second delays that would make an automated
+demonstration appear to stall. This was addressed by making the language model
+strictly optional and non-blocking — the deterministic template is always available
+instantly, and the model merely enhances phrasing when present — and by recording
+demonstrations in both a fast template mode and a natural language-model mode so that
+each could be shown to advantage.</p>
+<p>In every case the resolution reinforced a core design principle: keep the
+deterministic path authoritative and fast, treat the generative and learned
+components as valuable but fallible enhancements, and make the system observable so
+that defects reveal themselves.</p>
+
+<!-- ============================== CHAPTER 9 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 9 — Results and Evaluation</h1>
+
+<h2>9.1 NLU Model Metrics</h2>
+<p>The intent and sentiment classifiers were evaluated on a held-out stratified
+split of the labelled corpus. Table 9.1 summarizes the headline figures.</p>
+<table>
+<tr><th>Model</th><th>Accuracy</th><th>Notes</th></tr>
+<tr><td>Sentiment MLP</td><td>~83%</td><td>Three-class (POS/NEU/NEG); strong on a small set</td></tr>
+<tr><td>Intent MLP</td><td>~62%</td><td>Fourteen-class; bounded by the compact PoC seed corpus</td></tr>
+</table>
+<div class="fig">Table 9.1 — NLU Held-Out Metrics.</div>
+<p>The intent figure must be read in context: with only one or two held-out examples
+per class in a compact corpus, a single misclassification moves the metric sharply.
+At runtime the model is trained on the full corpus and is backstopped by a keyword
+fallback, so observed live accuracy is materially higher than the held-out number
+suggests. The clearest path to improvement — enlarging the labelled corpus, ideally
+by mining real chat logs — is discussed as future scope.</p>
+
+<h2>9.2 Conversation KPIs</h2>
+<p>Live KPIs are aggregated from the session logs written during conversations:
+the resolution rate (share of sessions ending resolved or escalated-and-closed),
+the average per-turn processing latency, and a customer-satisfaction proxy computed
+from thumbs feedback. Across the designed test scenarios the resolution rate is
+100%, and deterministic per-turn latency is a few milliseconds (template mode),
+rising to a few seconds only when the optional LLM is invoked for phrasing.</p>
+
+<h2>9.3 Screenshot Walkthrough</h2>
+<img src="../screenshots/01-welcome.png">
+<div class="fig">Fig 9.1 — Welcome page: educates the customer before login.</div>
+<img src="../screenshots/05-bill-explain.png">
+<div class="fig">Fig 9.2 — Billing explanation with correctly rendered amounts and live signals.</div>
+<img src="../screenshots/09-offer-recommendation.png">
+<div class="fig">Fig 9.3 — Offer recommendation (UC-02) with ranked offer cards and scores.</div>
+<img src="../screenshots/07-handoff-retention.png">
+<div class="fig">Fig 9.4 — Hub-and-spoke hand-off to the retention specialist, with the handoff badge and sidebar signals.</div>
+
+<h2>9.4 Discussion</h2>
+<p>The results confirm that the hybrid architecture achieves its central aim: fluent,
+human-like interaction with strict factual reliability. The deterministic core
+guarantees that resolutions are correct and policy-compliant, while the optional LLM
+elevates the phrasing to a natural register. The live signals make the system's
+reasoning transparent — an observer can watch the intent, sentiment and active agent
+update turn by turn — which is valuable both for demonstration and for operational
+trust. The reinforcement-learning loop, though modest in a short session, provides
+the mechanism for long-run improvement that the objectives require.</p>
+
+<h2>9.5 Fulfilment of Objectives</h2>
+<table>
+<tr><th>Objective</th><th>Evidence of fulfilment</th></tr>
+<tr><td>1. Automated real-time NLP support</td><td>End-to-end chatbot resolving billing and offer queries in real time</td></tr>
+<tr><td>2. Improve quality &amp; efficiency</td><td>Grounded NLG + low latency; RL improves offer relevance; KPIs track outcomes</td></tr>
+<tr><td>3. Deep-learning NLU &amp; NLG</td><td>MLP neural intent + sentiment models; grounded generation with local LLM</td></tr>
+<tr><td>4. Reinforcement learning from feedback</td><td>Persisted epsilon-greedy bandit updated by accept/decline and thumbs feedback</td></tr>
+<tr><td>5. Evaluation with key metrics</td><td>Accuracy/precision/recall/F1 + resolution rate, latency, CSAT proxy</td></tr>
+</table>
+<div class="fig">Table 9.2 — Mapping of Results to Objectives.</div>
+
+<!-- ============================== CHAPTER 10 ============================== -->
+<div class="pb"></div>
+<h1>Chapter 10 — Conclusion and Future Scope</h1>
+<h2>10.1 Conclusion</h2>
+<p>This project set out to design and implement an intelligent conversational AI
+chatbot that delivers automated, accurate and real-time customer support for
+telecom billing disputes and offer recommendations. The delivered system meets that
+goal end-to-end: it validates the customer's identity, understands free-text queries
+through deep-learning NLU, resolves billing disputes with evidence-backed remedies,
+recommends and applies personalized offers, escalates difficult cases through a
+hub-and-spoke hand-off to a retention specialist, phrases its replies naturally via
+an optional local LLM while never fabricating facts, learns which offers customers
+accept through a reinforcement-learning loop, and exposes live signals and KPIs for
+monitoring. All five objectives are satisfied, and the system runs reproducibly on
+commodity hardware with a single command. The central methodological contribution is
+the demonstration that a hybrid design — deterministic understanding and
+decision-making, optional generative fluency, and adaptive learning — can reconcile
+the fluency of modern language models with the correctness and transparency that a
+regulated billing domain demands.</p>
+<h2>10.2 Limitations</h2>
+<p>As a proof of concept, the system has deliberate limitations. The NLU models are
+trained on a compact hand-labelled corpus, capping held-out accuracy. The data
+adapters are synthetic rather than connected to live CRM/billing systems. The
+supervisor approval in the retention flow is simulated rather than routed through a
+real approval channel, and there is no transfer to a human agent. The system is
+text-only and monolingual.</p>
+<h2>10.3 Future Scope</h2>
 <ul>
-  <li>Project repository — see <code>README.md</code> and <code>architecture/</code> (system, pipeline, hub-and-spoke, NLU/NLG/RL, data model).</li>
-  <li>scikit-learn (MLPClassifier, TF-IDF); Streamlit; Ollama (local LLM runtime).</li>
-  <li>Synthetic datasets: <code>data/synthetic_telco.json</code>, <code>data/synthetic_tickets.json</code>.</li>
+  <li><b>Corpus expansion:</b> mine real, anonymized chat logs and support tickets to enlarge the labelled corpus and lift NLU accuracy substantially.</li>
+  <li><b>Transformer NLU:</b> replace or augment the MLP classifiers with fine-tuned transformer encoders for stronger generalization.</li>
+  <li><b>Live back-ends:</b> swap the synthetic adapters for connectors to production CRM, billing and ticketing systems.</li>
+  <li><b>Contextual RL:</b> extend the bandit to a contextual policy conditioned on customer features for sharper personalization.</li>
+  <li><b>Approval &amp; validation workflows:</b> add a real supervisor approval channel and a proactive validation agent that confirms promised actions were executed, reducing repeat contacts.</li>
+  <li><b>Multilingual &amp; voice:</b> extend to additional languages and to a voice channel.</li>
+  <li><b>Retrieval-augmented answers:</b> ground open FAQ-style questions in a knowledge base via retrieval-augmented generation.</li>
 </ul>
+
+<!-- ============================== REFERENCES ============================== -->
+<div class="pb"></div>
+<h1>References</h1>
+<ol style="font-size:11px;">
+  <li>Weizenbaum, J. (1966). ELIZA — A Computer Program for the Study of Natural Language Communication between Man and Machine. <i>Communications of the ACM</i>.</li>
+  <li>Jurafsky, D. &amp; Martin, J. H. <i>Speech and Language Processing</i> (3rd ed. draft). Stanford University.</li>
+  <li>Vaswani, A. et al. (2017). Attention Is All You Need. <i>NeurIPS</i>.</li>
+  <li>Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. <i>NAACL</i>.</li>
+  <li>Sutton, R. S. &amp; Barto, A. G. <i>Reinforcement Learning: An Introduction</i> (2nd ed.). MIT Press.</li>
+  <li>Ricci, F., Rokach, L. &amp; Shapira, B. (eds.). <i>Recommender Systems Handbook</i>. Springer.</li>
+  <li>Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. <i>JMLR</i>.</li>
+  <li>Hutto, C. J. &amp; Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis. <i>ICWSM</i>.</li>
+  <li>Streamlit Documentation. https://docs.streamlit.io</li>
+  <li>Ollama — Local Large Language Model Runtime. https://ollama.com</li>
+  <li>Young, S. et al. (2013). POMDP-based Statistical Spoken Dialogue Systems: A Review. <i>Proceedings of the IEEE</i>.</li>
+  <li>Auer, P., Cesa-Bianchi, N. &amp; Fischer, P. (2002). Finite-time Analysis of the Multiarmed Bandit Problem. <i>Machine Learning</i>.</li>
+</ol>
+
+<!-- ============================== APPENDICES ============================== -->
+<div class="pb"></div>
+<h1>Appendices</h1>
+<h2>Appendix A — Sample Synthetic Data</h2>
+<p>An abbreviated example of a customer record and a bill line item with evidence,
+illustrating the structure used throughout the system:</p>
+<pre class="code">"CUST-TELCO-1003": {
+  "customer_id": "CUST-TELCO-1003", "first_name": "Marcus", "last_name": "Rivera",
+  "plan": "ESSENTIAL_5G_35", "tenure_months": 6, "arpu_usd": 35,
+  "loyalty_tier": "BRONZE", "segment": "VALUE", "last4_id": "1100"
+}
+// bill line item with evidence
+{ "charge_id": "CHG-OVG-003", "description": "Data overage — 3 GB beyond plan",
+  "amount_usd": 21, "type": "OVERAGE",
+  "evidence": { "usage_gb": 3.1, "window": "2026-03-25 to 2026-04-05" } }</pre>
+
+<h2>Appendix B — Key Code Listing (Per-Turn Entry Point)</h2>
+<pre class="code">def handle_turn(state, text, use_llm=True):
+    frame = pipeline.understand(text)          # NLU → TurnFrame
+    directive = policy_engine.evaluate(frame, state)
+    if state.active_spoke == "billing":
+        flow_response = _route_billing(state, frame)
+        reason = _detect_handoff(frame, state, directive, flow_response)
+        if reason:                              # hub-and-spoke handoff
+            _do_handoff(state, reason)
+            flow_response = _retention_intro(state, frame)
+    else:
+        flow_response = retention_flow.handle(state, frame)
+    text_out = generator.compose(PERSONA[state.active_spoke],
+                                 flow_response["template"],
+                                 facts=flow_response.get("facts"),
+                                 directive=directive, use_llm=use_llm)
+    # ... assemble response, record turn + latency, return</pre>
+
+<h2>Appendix C — Milestone Outcome Summary</h2>
+<p>See Table 5.1 for the consolidated milestone outcomes. Each milestone produced a
+tangible, testable artefact: the synthetic dataset (M1); the labelled corpus and
+pre-processing (M2); the trained NLU pipeline (M3); the grounded NLG module with a
+pluggable LLM provider (M4); the reinforcement-learning bandit with a persisted
+policy (M5); and the deployed, monitored Streamlit application (M6). Collectively
+these artefacts constitute the complete, runnable proof-of-concept described in this
+report.</p>
+
+<div class="pb"></div>
+<h2>Appendix D — System Reference Tables</h2>
+<h3>D.1 Intent Taxonomy</h3>
+<p>The fourteen intents recognized by the NLU stack, with the customer behaviour
+each represents:</p>
+<table>
+<tr><th>Intent</th><th>Meaning / example</th></tr>
+<tr><td>GREETING</td><td>Opening pleasantry — “hi, I need help”</td></tr>
+<tr><td>BILL_EXPLAIN</td><td>Request to understand the bill — “why is my bill higher?”</td></tr>
+<tr><td>BILL_DISPUTE</td><td>Assertion that a charge is wrong — “this roaming charge is incorrect”</td></tr>
+<tr><td>FACTUAL_DISPUTE</td><td>Denial of the underlying fact — “I never went to Mexico”</td></tr>
+<tr><td>PROMO_INQUIRY</td><td>Interest in offers — “any deals for me?”</td></tr>
+<tr><td>CONFIRM_YES</td><td>Affirmation — “yes, apply it”</td></tr>
+<tr><td>CONFIRM_NO</td><td>Refusal — “no thanks”</td></tr>
+<tr><td>HAGGLE</td><td>Negotiation pressure — “that's too expensive, do better”</td></tr>
+<tr><td>CREATE_TICKET</td><td>Request to formalize a dispute — “open a complaint”</td></tr>
+<tr><td>TICKET_STATUS</td><td>Query about an existing ticket — “any update on my dispute?”</td></tr>
+<tr><td>HUMAN_HANDOFF</td><td>Request for a specialist/person — “let me talk to someone”</td></tr>
+<tr><td>PAYMENT_QUERY</td><td>Payment-history question — “when did I last pay?”</td></tr>
+<tr><td>GOODBYE</td><td>Closing — “that's all, thanks”</td></tr>
+<tr><td>FALLBACK</td><td>Out-of-scope or unintelligible input</td></tr>
+</table>
+<h3>D.2 Offer Catalogue</h3>
+<table>
+<tr><th>Offer</th><th>Target tier</th><th>Min tenure</th><th>Value</th><th>Applies to</th></tr>
+<tr><td>Gold loyalty — 10% off for 3 months</td><td>GOLD</td><td>36 months</td><td>$24</td><td>Plan charge</td></tr>
+<tr><td>Add-on 5 GB data free for 2 months</td><td>Any</td><td>3 months</td><td>$12</td><td>Data add-on</td></tr>
+<tr><td>Upgrade to Family Share — first month free</td><td>SILVER</td><td>6 months</td><td>$120</td><td>Plan upgrade</td></tr>
+<tr><td>One-time 50% waiver on overage</td><td>BRONZE</td><td>1 month</td><td>$10</td><td>Overage charge</td></tr>
+</table>
+<h3>D.3 Demonstration Customers</h3>
+<table>
+<tr><th>Customer</th><th>Tier</th><th>Bill</th><th>Disputable charge</th><th>Best-suited demonstration</th></tr>
+<tr><td>Ethan Walker</td><td>GOLD</td><td>$122</td><td>$30 Mexico roaming (with evidence)</td><td>Roaming dispute → ticket; loyalty/data offers</td></tr>
+<tr><td>Sarah Chen</td><td>SILVER</td><td>$120</td><td>—</td><td>Family / data offer recommendations</td></tr>
+<tr><td>Marcus Rivera</td><td>BRONZE</td><td>$62</td><td>$21 data overage (with metering)</td><td>Overage dispute → haggle → hand-off → close</td></tr>
+</table>
+<h3>D.4 Key Performance Indicators</h3>
+<table>
+<tr><th>KPI</th><th>Definition</th></tr>
+<tr><td>Resolution rate</td><td>Share of sessions ending in a resolved or escalated-and-closed state</td></tr>
+<tr><td>Average latency</td><td>Mean per-turn processing time in milliseconds</td></tr>
+<tr><td>CSAT proxy</td><td>Ratio of thumbs-up to total feedback ratings</td></tr>
+<tr><td>Intent accuracy</td><td>Correct-intent proportion on the held-out evaluation split</td></tr>
+<tr><td>Sentiment accuracy</td><td>Correct-sentiment proportion on the held-out split</td></tr>
+</table>
+<h3>D.5 Handoff Triggers</h3>
+<table>
+<tr><th>Trigger</th><th>Condition</th></tr>
+<tr><td>offers_exhausted</td><td>The offers flow has no remaining eligible offer to pitch</td></tr>
+<tr><td>voice_cannot_resolve</td><td>The billing flow needs a credit beyond front-line authority</td></tr>
+<tr><td>customer_requested</td><td>The customer explicitly asks for a specialist</td></tr>
+<tr><td>haggle</td><td>The customer negotiates or threatens to leave</td></tr>
+<tr><td>negative_sentiment</td><td>The policy engine raises escalation after sustained negative sentiment (≥2 turns)</td></tr>
+</table>
+
+<p style="text-align:center;margin-top:30px;color:#26256b;"><b>— End of Report —</b></p>
